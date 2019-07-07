@@ -68,14 +68,14 @@ install:
     fi
     export PKG_CONFIG_PATH=${DEPS_DIR}/${LIBXSMM_DIR}/lib
   - pkg-config libxsmm --exists
+  - sudo apt update
+  - sudo apt -y install --no-install-recommends gfortran
 
 before_script:
   # make sure we are back into the top directory again
   - cd "${TRAVIS_BUILD_DIR}"
   - export PATH=$HOME/.local/bin:$PATH
   - pip install --user git-archive-all pre-commit
-  - sudo apt-get update && apt-get -y upgrade
-  - sudo apt-get -y install --no-install-recommends gfortran
 
 script:  # multiplied by matrix envs and os settings
   - mkdir -p build

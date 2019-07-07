@@ -74,8 +74,8 @@ before_script:
   - cd "${TRAVIS_BUILD_DIR}"
   - export PATH=$HOME/.local/bin:$PATH
   - pip install --user git-archive-all pre-commit
-  - apt update
-  - apt install gfortran
+  - sudo apt-get update && apt-get -y upgrade
+  - sudo apt-get -y install --no-install-recommends gfortran
 
 script:  # multiplied by matrix envs and os settings
   - mkdir -p build

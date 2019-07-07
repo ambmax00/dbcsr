@@ -1,5 +1,4 @@
 language: c
-group: travis_latest
 
 os:
   - linux
@@ -9,10 +8,17 @@ dist: bionic
 
 addons:
   apt:
-    sources: ubuntu-toolchain-r-test
-    packages: ['gfortran','libblas-dev',liblapack-dev','openmpi-bin','libopenmpi-dev']
+    packages:
+    - gfortran
+    - libblas-dev
+    - liblapack-dev
+    - libopenmpi-dev
+    - openmpi-bin
   homebrew:
-    packages: ['gcc','cmake','openmpi']
+    packages:
+    - gcc
+    - cmake
+    - openmpi
     update: true
 
 cache:
@@ -68,6 +74,8 @@ before_script:
   - cd "${TRAVIS_BUILD_DIR}"
   - export PATH=$HOME/.local/bin:$PATH
   - pip install --user git-archive-all pre-commit
+  - apt update
+  - apt install gfortran
 
 script:  # multiplied by matrix envs and os settings
   - mkdir -p build

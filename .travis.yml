@@ -68,8 +68,11 @@ install:
     fi
     export PKG_CONFIG_PATH=${DEPS_DIR}/${LIBXSMM_DIR}/lib
   - pkg-config libxsmm --exists
-  - sudo apt update
-  - sudo apt -y install --no-install-recommends gfortran
+  - |
+    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+       sudo apt update
+       sudo apt -y install --no-install-recommends gfortran libblas-dev liblapack-dev libopenmpi-dev openmpi-bin   
+    fi
 
 before_script:
   # make sure we are back into the top directory again

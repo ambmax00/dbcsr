@@ -1,4 +1,5 @@
 language: c
+group: travis_latest
 
 os:
   - linux
@@ -8,17 +9,9 @@ dist: bionic
 
 addons:
   apt:
-    packages:
-    - gfortran
-    - libblas-dev
-    - liblapack-dev
-    - libopenmpi-dev
-    - openmpi-bin
+    packages: ['gfortran','libblas-dev',liblapack-dev','openmpi-bin','libopenmpi-dev']
   homebrew:
-    packages:
-    - gcc
-    - cmake
-    - openmpi
+    packages: ['gcc','cmake','openmpi']
     update: true
 
 cache:

@@ -12,6 +12,8 @@ addons:
     - gfortran
     - libblas-dev
     - liblapack-dev
+    - libmpich-dev
+    - libmpich12
     - mpich
   homebrew:
     packages:

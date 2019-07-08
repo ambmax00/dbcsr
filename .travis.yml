@@ -4,7 +4,7 @@ os:
   - linux
   - osx
 
-dist: bionic
+dist: xenial
 
 addons:
   apt:
@@ -12,13 +12,13 @@ addons:
     - gfortran
     - libblas-dev
     - liblapack-dev
-    - libopenmpi-dev
-    - openmpi-bin
+    - libmpich-dev
+    - libmpich12
   homebrew:
     packages:
     - gcc
     - cmake
-    - openmpi
+    - mpich
     update: true
 
 cache:
@@ -68,11 +68,6 @@ install:
     fi
     export PKG_CONFIG_PATH=${DEPS_DIR}/${LIBXSMM_DIR}/lib
   - pkg-config libxsmm --exists
-  - |
-    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
-       sudo apt update
-       sudo apt -y install --no-install-recommends gfortran libblas-dev liblapack-dev libopenmpi-dev openmpi-bin   
-    fi
 
 before_script:
   # make sure we are back into the top directory again

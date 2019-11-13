@@ -64,6 +64,16 @@ $:    ", ".join(list(set(list_in)))
 
 #! added
 
+#! c datatypes
+
+#! dtype_float_type = ['REAL(kind=real_8)', 'REAL(kind=real_4)', 'COMPLEX(kind=real_8)', 'COMPLEX(kind=real_4)']
+#: set base_dtype_float_type = ['REAL', 'REAL', 'COMPLEX', 'COMPLEX']
+#: set cf_dtype_float_type = ['c_double', 'c_float', 'c_double_complex', 'c_float_complex']
+#: set c_dtype_float_type = ['double', 'float', 'double _Complex', 'float _Complex']
+
+#:set cf_dtype_float_list = list(zip(dtype_float_param, dtype_float_type, dtype_float_suffix, base_dtype_float_type, cf_dtype_float_type))
+#:set c_dtype_float_list = list(zip(dtype_float_suffix, c_dtype_float_type))
+
 #:def varlist_equal(name, nmin=1, nmax=maxrank, suffix="")
 #!    create variable list "name_1=name_1, name_2=name_2, ..., name_n=name_n
 $:    ", ".join([name + "_" + str(i) + suffix + "=" + name + "_" + str(i) + suffix for i in range(nmin, nmax+1)])

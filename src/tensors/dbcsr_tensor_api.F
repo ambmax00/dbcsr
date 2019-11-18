@@ -47,14 +47,14 @@ MODULE dbcsr_tensor_api
    CHARACTER(len=*), PARAMETER, PRIVATE :: moduleN = 'dbcsr_tensor_api'
 
    PUBLIC :: dbcsr_t_contract, dbcsr_t_contract_test
-   PUBLIC :: dbcsr_t_get_block
-   PUBLIC :: dbcsr_t_get_stored_coordinates
-   PUBLIC :: dbcsr_t_put_block
-   PUBLIC :: dbcsr_t_reserve_blocks
+   PUBLIC :: dbcsr_t_get_block ! done
+   PUBLIC :: dbcsr_t_get_stored_coordinates ! done
+   PUBLIC :: dbcsr_t_put_block ! done
+   PUBLIC :: dbcsr_t_reserve_blocks ! done
    PUBLIC :: dbcsr_t_create
    PUBLIC :: dbcsr_t_destroy
    PUBLIC :: dbcsr_t_distribution_destroy
-   PUBLIC :: dbcsr_t_distribution_new
+   PUBLIC :: dbcsr_t_distribution_new ! done
    PUBLIC :: dbcsr_t_distribution_type
    PUBLIC :: dbcsr_t_nd_mp_comm
    PUBLIC :: dbcsr_t_nd_mp_free
@@ -66,7 +66,7 @@ MODULE dbcsr_tensor_api
    PUBLIC :: dbcsr_t_iterator_type
    PUBLIC :: dbcsr_t_split_blocks
    PUBLIC :: dbcsr_t_pgrid_type
-   PUBLIC :: dbcsr_t_pgrid_create
+   PUBLIC :: dbcsr_t_pgrid_create ! done
    PUBLIC :: dbcsr_t_pgrid_destroy
    PUBLIC :: dbcsr_t_set
    PUBLIC :: dbcsr_t_filter

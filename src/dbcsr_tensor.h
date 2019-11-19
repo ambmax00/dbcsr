@@ -59,6 +59,10 @@ extern "C" {
 #:endfor
      
      void c_dbcsr_t_filter_${dsuffix}$ (void* c_tensor, ${ctype}$ c_eps, int* c_method, bool* c_use_absolute);
+     
+     void c_dbcsr_t_set_${dsuffix}$ (void* c_tensor, ${ctype}$ c_alpha);
+	 
+	 void c_dbcsr_t_scale_${dsuffix}$ (void* c_tensor, ${ctype}$ c_alpha);
 	
 #:endfor
  
@@ -78,7 +82,7 @@ extern "C" {
           
      bool c_dbcsr_t_iterator_blocks_left(void* c_iterator);
      
- /*    void c_dbcsr_t_get_info(void* c_tensor, int tensor_dim, int* c_nblks_total,
+     void c_dbcsr_t_get_info(void* c_tensor, int tensor_dim, int* c_nblks_total,
                                int* c_nfull_total,
                                int* c_nblks_local, 
                                int* c_nfull_local, 
@@ -90,11 +94,21 @@ extern "C" {
                                ${extern_alloc_varlist_and_size("c_blk_offset")}$, 
                                void** c_distribution, 
                                const char* c_name, 
-                               int* c_data_type);*/
+                               int* c_data_type);
                                
      void c_dbcsr_t_split_blocks(void* c_tensor_in, int tensor_dim, void** c_tensor_out, int* c_block_sizes, bool* c_nodata);
      
-
+     void c_dbcsr_t_copy_matrix_to_tensor(void* c_matrix_in, void* c_tensor_out, bool* c_summation);
+     
+     void c_dbcsr_t_copy_tensor_to_matrix(void* c_tensor_in, void* c_matrix_out, bool* c_summation);
+     
+     void c_dbcsr_t_blk_sizes(void* c_tensor, int tensor_dim, int* c_ind, int* c_blk_size);
+     
+     void c_dbcsr_t_copy(void* c_tensor_in, int tensor_dim, void* c_tensor_out, int* c_order, bool* c_summation, 
+      bool* c_move_data, int* c_unit_nr);
+      
+     void c_dbcsr_t_clear(void* c_tensor);
+   
 	
 #ifdef __cplusplus
 }
@@ -175,39 +189,27 @@ static void c_dbcsr_t_filter(void* c_tensor, ${ctype}$ c_eps, int* c_method, boo
 	c_dbcsr_t_filter_${dsuffix}$ (c_tensor, c_eps, c_method, c_use_absolute);
 	
 }
+
+static void c_dbcsr_t_set(void* c_tensor, ${ctype}$ c_alpha) {
+   
+   c_dbcsr_t_set_${dsuffix}$ (c_tensor, c_alpha);
+   
+}
+
+static void c_dbcsr_t_scale(void* c_tensor, ${ctype}$ c_alpha) {
+	
+   c_dbcsr_t_scale_${dsuffix}$ (c_tensor, c_alpha);
+   
+}
+
 #:endfor
 
-/*
-static void c_dbcsr_t_get_info(void* c_tensor, int* c_nblks_total,
-                               int* c_nfull_total,
-                               int* c_nblks_local, 
-                               int* c_nfull_local, 
-                               int* c_pdims, 
-                               int* c_my_ploc, 
-                               ${extern_alloc_varlist_and_size("c_blks_local")}$, 
-                               ${extern_alloc_varlist_and_size("c_proc_dist")}$, 
-                               ${extern_alloc_varlist_and_size("c_blk_size")}$, 
-                               ${extern_alloc_varlist_and_size("c_blk_offset")}$, 
-                               void** c_distribution, 
-                               const char* c_name, 
-                               int* c_data_type) {
-								   
-		int tensor_dim = c_ndims_tensor(c_tensor);	
-		c_dbcsr_t_get_info(void* c_tensor, int tensor_dim, int* c_nblks_total,
-                               int* c_nfull_total,
-                               int* c_nblks_local, 
-                               int* c_nfull_local, 
-                               int* c_pdims, 
-                               int* c_my_ploc, 
-                               ${extern_alloc_varlist_and_size("c_blks_local")}$, 
-                               ${extern_alloc_varlist_and_size("c_proc_dist")}$, 
-                               ${extern_alloc_varlist_and_size("c_blk_size")}$, 
-                               ${extern_alloc_varlist_and_size("c_blk_offset")}$, 
-                               void** c_distribution, 
-                               const char* c_name, 
-                               int* c_data_type);
-                               
-}			
-*/	
+static void* c_dbcsr_t_blk_sizes(void* c_tensor, int* c_ind, int* c_blk_size) {
+	
+	int tensor_dim = c_ndims_tensor(c_tensor);
+	c_dbcsr_t_blk_sizes(c_tensor, tensor_dim, c_ind, c_blk_size);
+	
+}
+
 
 #endif // DBCSR_H

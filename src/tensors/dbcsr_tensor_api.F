@@ -51,35 +51,35 @@ MODULE dbcsr_tensor_api
    PUBLIC :: dbcsr_t_get_stored_coordinates ! done
    PUBLIC :: dbcsr_t_put_block ! done
    PUBLIC :: dbcsr_t_reserve_blocks ! done
-   PUBLIC :: dbcsr_t_create
-   PUBLIC :: dbcsr_t_destroy
-   PUBLIC :: dbcsr_t_distribution_destroy
+   PUBLIC :: dbcsr_t_create !done
+   PUBLIC :: dbcsr_t_destroy !done
+   PUBLIC :: dbcsr_t_distribution_destroy ! done
    PUBLIC :: dbcsr_t_distribution_new ! done
-   PUBLIC :: dbcsr_t_distribution_type
-   PUBLIC :: dbcsr_t_nd_mp_comm
-   PUBLIC :: dbcsr_t_nd_mp_free
-   PUBLIC :: dbcsr_t_type
-   PUBLIC :: dbcsr_t_iterator_next_block
-   PUBLIC :: dbcsr_t_iterator_blocks_left
-   PUBLIC :: dbcsr_t_iterator_stop
-   PUBLIC :: dbcsr_t_iterator_start
-   PUBLIC :: dbcsr_t_iterator_type
-   PUBLIC :: dbcsr_t_split_blocks
-   PUBLIC :: dbcsr_t_pgrid_type
+   PUBLIC :: dbcsr_t_distribution_type ! skip
+   PUBLIC :: dbcsr_t_nd_mp_comm !skip
+   PUBLIC :: dbcsr_t_nd_mp_free !skip
+   PUBLIC :: dbcsr_t_type !skip
+   PUBLIC :: dbcsr_t_iterator_next_block !done
+   PUBLIC :: dbcsr_t_iterator_blocks_left !done
+   PUBLIC :: dbcsr_t_iterator_stop !done
+   PUBLIC :: dbcsr_t_iterator_start !done
+   PUBLIC :: dbcsr_t_iterator_type !skip
+   PUBLIC :: dbcsr_t_split_blocks !done
+   PUBLIC :: dbcsr_t_pgrid_type !skip
    PUBLIC :: dbcsr_t_pgrid_create ! done
-   PUBLIC :: dbcsr_t_pgrid_destroy
-   PUBLIC :: dbcsr_t_set
-   PUBLIC :: dbcsr_t_filter
-   PUBLIC :: dbcsr_t_mp_environ_pgrid
-   PUBLIC :: dbcsr_t_copy_matrix_to_tensor
-   PUBLIC :: dbcsr_t_blk_sizes
-   PUBLIC :: dbcsr_t_copy
-   PUBLIC :: dbcsr_t_copy_tensor_to_matrix
-   PUBLIC :: dbcsr_t_get_info
-   PUBLIC :: dbcsr_t_checksum
-   PUBLIC :: dbcsr_t_finalize
-   PUBLIC :: dbcsr_t_need_contract
-   PUBLIC :: dbcsr_t_scale
+   PUBLIC :: dbcsr_t_pgrid_destroy ! done
+   PUBLIC :: dbcsr_t_set !done
+   PUBLIC :: dbcsr_t_filter !done
+   PUBLIC :: dbcsr_t_mp_environ_pgrid !skip
+   PUBLIC :: dbcsr_t_copy_matrix_to_tensor !done
+   PUBLIC :: dbcsr_t_blk_sizes ! done
+   PUBLIC :: dbcsr_t_copy ! done
+   PUBLIC :: dbcsr_t_copy_tensor_to_matrix !done
+   PUBLIC :: dbcsr_t_get_info !done
+   PUBLIC :: dbcsr_t_checksum ! skip
+   PUBLIC :: dbcsr_t_finalize ! skip
+   PUBLIC :: dbcsr_t_need_contract ! skip
+   PUBLIC :: dbcsr_t_scale ! done
    PUBLIC :: dbcsr_t_get_num_blocks, dbcsr_t_get_num_blocks_total
    PUBLIC :: dbcsr_t_get_nze, dbcsr_t_get_nze_total
    PUBLIC :: dbcsr_t_clear

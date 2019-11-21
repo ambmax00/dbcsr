@@ -456,41 +456,26 @@ CONTAINS
       INTEGER, DIMENSION(:), ALLOCATABLE              :: map1_2d_check, map2_2d_check
       CHARACTER(LEN=*), PARAMETER :: routineN = 'dbcsr_t_distribution_new', &
                                      routineP = moduleN//':'//routineN
-                                     
-      PRINT*, "HERE1"
 
       CALL timeset(routineN, handle)
       ndims = SIZE(map1_2d) + SIZE(map2_2d)
       DBCSR_ASSERT(ndims .GE. 2 .AND. ndims .LE. ${maxdim}$)
-      
-      PRINT*, ndims 
 
       CALL create_array_list(nd_dist, ndims, ${varlist("nd_dist")}$)
-      
-      PRINT*, "HERE2"
-      
-      PRINT*, pgrid%mp_comm_2d
 
       nblks_nd(:) = sizes_of_arrays(nd_dist)
 
       need_pgrid_remap = .TRUE.
       IF (PRESENT(own_comm)) THEN
-        PRINT*, "HERE22"
          CALL dbcsr_t_get_mapping_info(pgrid%nd_index_grid, map1_2d=map1_2d_check, map2_2d=map2_2d_check)
          IF (own_comm) THEN
-         PRINT*, "HERE23"
             IF (.NOT. array_eq_i(map1_2d_check, map1_2d) .OR. .NOT. array_eq_i(map2_2d_check, map2_2d)) THEN
                DBCSR_ABORT("map1_2d / map2_2d are not consistent with pgrid")
             ENDIF
             pgrid_prv = pgrid
             need_pgrid_remap = .FALSE.
          ENDIF
-         PRINT*, "HERE24"
       ENDIF
-      
-      
-      PRINT*, "MAP"
-      PRINT*, SIZE(map1_2d)
 
       IF (need_pgrid_remap) CALL dbcsr_t_pgrid_remap(pgrid, map1_2d, map2_2d, pgrid_prv)
 
@@ -500,8 +485,6 @@ CONTAINS
       ! process grid index mapping
       CALL create_nd_to_2d_mapping(map_grid, dims, map1_2d, map2_2d, base=0, col_major=.FALSE.)
 
-      PRINT*, "HERE4"
-
       ! blk index mapping
       CALL create_nd_to_2d_mapping(map_blks, nblks_nd, map1_2d, map2_2d)
 
@@ -509,8 +492,6 @@ CONTAINS
       col_dist_obj = dbcsr_tas_dist_t(nd_dist, map_blks, map_grid, 2)
 
       CALL dbcsr_t_get_mapping_info(map_grid, dims_2d=pdims_2d)
-      
-      PRINT*, "HERE5"
 
       comm_2d = pgrid_prv%mp_comm_2d !dbcsr_t_2d_mp_comm(comm_nd, map1_2d, map2_2d)
 
@@ -524,8 +505,6 @@ CONTAINS
       ELSE
          CALL dbcsr_tas_distribution_new(dist%dist, comm_2d, row_dist_obj, col_dist_obj)
       ENDIF
-
-      PRINT*, "HERE6"
 
       dist%nd_dist = nd_dist
       dist%pgrid = pgrid_prv
@@ -1059,16 +1038,10 @@ CONTAINS
       CALL timeset(routineN, handle)
 
       ndims = SIZE(dims)
-      
-      PRINT*, ndims
-      
       IF (PRESENT(map1_2d) .AND. PRESENT(map2_2d)) THEN
-         PRINT*, "MAP PRESENT"
          CALL allocate_any(map1_2d_prv, source=map1_2d)
          CALL allocate_any(map2_2d_prv, source=map2_2d)
-         
       ELSE
-         PRINT*, "MAP NOT PRESENT"
          ALLOCATE (map1_2d_prv(ndims/2))
          ALLOCATE (map2_2d_prv(ndims - ndims/2))
          map1_2d_prv(:) = (/(i, i=1, SIZE(map1_2d_prv))/)

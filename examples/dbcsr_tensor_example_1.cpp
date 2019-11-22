@@ -35,16 +35,14 @@ void printvec(std::vector<int>& v) {
 
 void fill_random(void* tensor, std::vector<std::vector<int>> nzblocks) {
 	
-	int myrank = 0;
-	int mpi_size = 0;
-	int proc = 0;
+	int myrank, mpi_size, proc;
 	int dim = nzblocks.size();
 	
 	MPI_Comm_rank(MPI_COMM_WORLD, &myrank); 
 	MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
 	
-	std::cout << "Filling Tensor..." << std::endl;
-	std::cout << "Dimension: " << dim << std::endl;
+	if (myrank == 0) std::cout << "Filling Tensor..." << std::endl;
+	if (myrank == 0) std::cout << "Dimension: " << dim << std::endl;
 	
 	int nblocks = nzblocks[0].size();
 	std::vector<std::vector<int>> mynzblocks(dim);
@@ -64,6 +62,7 @@ void fill_random(void* tensor, std::vector<std::vector<int>> nzblocks) {
 		
 	}
 	
+	/*
 	for (int i = 0; i != mpi_size; ++i) {
 		if (i == myrank) {
 			std::cout << "Blocks stored on processor " << myrank << " :" << std::endl;
@@ -79,19 +78,20 @@ void fill_random(void* tensor, std::vector<std::vector<int>> nzblocks) {
 		MPI_Barrier(MPI_COMM_WORLD);
 		
 	}
+	*/
 	
-	std::cout << "Reserving blocks..." << std::endl;
+	if (myrank == 0) std::cout << "Reserving blocks..." << std::endl;
 	switch (dim) {
-		case 2: std::cout << "2" << std::endl;
+		case 2: 
 			c_dbcsr_t_reserve_blocks_index(tensor, mynzblocks[0].data(), mynzblocks[0].size(),
 			mynzblocks[1].data(), mynzblocks[1].size(), nullptr, 0, nullptr, 0);
 			break;
-		case 3:  std::cout << "3" << std::endl;
+		case 3:  
 			c_dbcsr_t_reserve_blocks_index(tensor, mynzblocks[0].data(), mynzblocks[0].size(),
 			mynzblocks[1].data(), mynzblocks[1].size(), mynzblocks[2].data(), mynzblocks[2].size(),
 			nullptr, 0); 
 			break;
-		case 4:  std::cout << "4" << std::endl; 
+		case 4:  
 			c_dbcsr_t_reserve_blocks_index(tensor, mynzblocks[0].data(), mynzblocks[0].size(),
 			mynzblocks[1].data(), mynzblocks[1].size(), mynzblocks[2].data(), mynzblocks[2].size(),
 			mynzblocks[3].data(), mynzblocks[3].size());
@@ -120,39 +120,37 @@ void fill_random(void* tensor, std::vector<std::vector<int>> nzblocks) {
     std::vector<double> block(1);
 
     int n_b = 0;
-    int blk;
-    int blk_proc;
+    int blk = 0;
+    int blk_proc = 0;
     
     while(c_dbcsr_t_iterator_blocks_left(iter)) {
 		
-		std::cout << "Block " << n_b++ << std::endl;
+		//std::cout << "Block " << n_b++ << std::endl;
 		
 		c_dbcsr_t_iterator_next_block(iter, loc_idx.data(), &blk, &blk_proc, blk_sizes.data(), nullptr);
 		
-		std::cout << "Blk: " << blk << std::endl;
-		std::cout << "Blk_p: " << blk_proc << std::endl;
+		//std::cout << "Blk: " << blk << std::endl;
+		//std::cout << "Blk_p: " << blk_proc << std::endl;
 		
-		for (auto i : blk_sizes) std::cout << i << " ";
-		std::cout << std::endl;
+		//for (auto i : blk_sizes) std::cout << i << " ";
+		//std::cout << std::endl;
 		
-		std::cout << "Index: " << std::endl;
-		for (auto i : loc_idx) std::cout << i << " ";
-		std::cout << std::endl;
+		//std::cout << "Index: " << std::endl;
+		//for (auto i : loc_idx) std::cout << i << " ";
+		//std::cout << std::endl;
 		
-		std::cout << "Generating Block..." << std::endl;
-		
-		//if (mpi_rank == blk_proc) {
+		//std::cout << "Generating Block..." << std::endl;
 		int tot = 1;
 		for (int i = 0; i != dim; ++i) {
 			tot *= blk_sizes[i];
 		}
-			
-		block.resize(tot);
-			
-		fill_rand(block);
 				
+		block.resize(tot);
+				
+		fill_rand(block);
+					
 		c_dbcsr_t_put_block(tensor, loc_idx.data(), blk_sizes.data(), block.data(), nullptr, nullptr);
-		
+	
 	}
 			
 	c_dbcsr_t_iterator_stop(&iter);	
@@ -300,11 +298,7 @@ int main(int argc, char* argv[])
 	map31 = {0};
 	map32 = {1, 2};
 	
-	if (mpi_rank == 0) {
-		
-		std::cout << "Creating dist objects..." << '\n' << std::endl;
-		
-	}
+	if (mpi_rank == 0) std::cout << "Creating dist objects..." << '\n' << std::endl;
 	
 	// create distribution objects
     c_dbcsr_t_distribution_new(&dist1, pgrid_3d, map11.data(), map11.size(),
@@ -320,8 +314,6 @@ int main(int argc, char* argv[])
 		map32.data(), map32.size(), dist31.data(), dist31.size(), 
 		dist32.data(), dist32.size(), dist33.data(), dist33.size(), nullptr, 0, nullptr);
 	
-	std::cout << "MAP" << std::endl;
-	printvec(map11); printvec(map12);
 	// create tensors
 	// (13|2)x(54|21)=(3|45)
 	
@@ -329,11 +321,7 @@ int main(int argc, char* argv[])
 	void* tensor2 = nullptr;
 	void* tensor3 = nullptr;
 	
-	if (mpi_rank == 0) {
-		
-		std::cout << "Creating tensors..." << std::endl;
-		
-	}
+	if (mpi_rank == 0) std::cout << "Creating tensors..." << std::endl;
 	
 	c_dbcsr_t_create_new(&tensor1, "(13|2)", dist1, map11.data(), map11.size(), map12.data(), map12.size(), nullptr, blk1.data(), 
 		blk1.size(), blk2.data(), blk2.size(), blk3.data(), blk3.size(), nullptr, 0);
@@ -358,9 +346,7 @@ int main(int argc, char* argv[])
 	
 	// (13|2)x(54|21)=(3|45)
 	
-	if (mpi_rank == 0) {
-		std::cout << "Contracting..." << std::endl;
-	}
+	if (mpi_rank == 0) std::cout << "Contracting..." << std::endl;
 	
 	// cn : indices to be contracted
 	// noncn : indices not to be contracted
@@ -369,7 +355,7 @@ int main(int argc, char* argv[])
 	c1 		= {0,1};
 	nonc1 	= {2};
 	c2 		= {0,1};
-	nonc2	= {3,4};
+	nonc2	= {2,3};
 	map1	= {0};
 	map2	= {1,2};
 	

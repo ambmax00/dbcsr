@@ -93,9 +93,7 @@ CONTAINS
       TYPE(dbcsr_t_pgrid_type), POINTER                  :: pgrid
 
       dims => c_dims
-
-      PRINT *, "SIZE: ", map1_2d_size
-
+      
       IF (PRESENT(c_map1_2d) .AND. PRESENT(c_map2_2d)) THEN
          map1_2d = c_map1_2d + 1
          map2_2d = c_map2_2d + 1
@@ -113,8 +111,6 @@ CONTAINS
        DEALLOCATE(map1_2d)
        DEALLOCATE(map2_2d)
       ENDIF
-      
-      PRINT *, "PGRID", pgrid%mp_comm_2d
 
    END SUBROUTINE
 
@@ -190,29 +186,14 @@ CONTAINS
 
 #:endfor
 
-      IF (PRESENT(c_own_comm)) THEN
-         own_comm = c_own_comm
-         PRINT *, "Bool is there."
-      ENDIF
-
-      DO i = 1, SIZE(c_nd_dist_1)
-        PRINT*, c_nd_dist_1(i)
-      END DO
-
-      PRINT *, "HERE"
+      IF (PRESENT(c_own_comm)) own_comm = c_own_comm
 
       ALLOCATE (dist)
 
       CALL c_f_pointer(c_pgrid, pgrid)
-      
-      
-
-      PRINT *, "ENTERING"
 
       CALL dbcsr_t_distribution_new(dist, pgrid, map1_2d + 1, map2_2d + 1, &
                                     ${varlist("nd_dist")}$, own_comm)
-
-      PRINT *, "EXITING"
 
       c_dist = c_loc(dist)
       
@@ -569,35 +550,14 @@ CONTAINS
       LOGICAL, ALLOCATABLE :: summation
       ${dtype}$, ALLOCATABLE :: scale
       
-      INTEGER :: i
-      
-      PRINT*, "EVERYTHING IS DEFINED:"
-      
       ind => c_ind
       
-      IF (PRESENT(c_summation)) THEN
-        summation = c_summation
-      ENDIF
-      
-      IF (PRESENT(c_scale)) THEN
-        scale = c_scale
-      ENDIF
+      IF (PRESENT(c_summation)) summation = c_summation
+      IF (PRESENT(c_scale)) scale = c_scale
       
       CALL c_f_pointer(c_tensor, tensor) 
       sizes => c_sizes
       block => c_block
-      
-      PRINT*, "IND"
-      DO i = 1, SIZE(ind)
-        PRINT*, ind(i)
-      END DO
-      
-      PRINT*, "SIZES"
-      DO i = 1, SIZE(sizes)
-        PRINT*, sizes(i)
-      END DO
-    
-      PRINT*, "CALLING..."
       
       CALL dbcsr_t_put_block(tensor, ind+1, sizes, &
         block, summation, scale)
@@ -622,98 +582,11 @@ CONTAINS
 
       TYPE(dbcsr_t_type), POINTER :: tensor
       INTEGER, DIMENSION(:), POINTER  :: ind_nd
-      
-       INTEGER, DIMENSION(tensor_dim) :: nblks_total, nfull_total, &
-                                                                         nblks_local, nfull_local, &
-                                                                         my_ploc, pdims
-      INTEGER, DIMENSION(:), ALLOCATABLE :: ${varlist("blks_local")}$
-      INTEGER, DIMENSION(:), ALLOCATABLE :: ${varlist("proc_dist")}$
-      INTEGER, DIMENSION(:), ALLOCATABLE :: ${varlist("blk_size")}$
-      INTEGER, DIMENSION(:), ALLOCATABLE :: ${varlist("blk_offset")}$
-      TYPE(dbcsr_t_distribution_type)         :: distribution
-
-      INTEGER, DIMENSION(tensor_dim)                  :: pdims_tmp, my_ploc_tmp
-      INTEGER :: i
         
       CALL c_f_pointer(c_tensor, tensor)
       ind_nd => c_ind_nd
-
-!GO TO 9999
-      PRINT*, "HEEEEEY"
-      
-      CALL dbcsr_t_get_info(tensor, nblks_total, &
-                               nfull_total, &
-                               nblks_local, &
-                               nfull_local, &
-                               pdims, &
-                               my_ploc, &
-                               ${varlist("blks_local")}$, &
-                               ${varlist("proc_dist")}$, &
-                               ${varlist("blk_size")}$, &
-                               ${varlist("blk_offset")}$, &
-                               distribution)
-                               
-       PRINT*, "nblks_total"
-       DO i = 1, SIZE(nblks_total)
-        PRINT*, nblks_total(i)
-       END DO
-       
-       PRINT*, "nfull_total"
-       DO i = 1, SIZE(nfull_total)
-        PRINT*, nfull_total(i)
-       END DO
-       
-       PRINT*, "nblks_local"
-       DO i = 1, SIZE(nblks_local)
-        PRINT*, nblks_local(i)
-       END DO
-       
-       PRINT*, "nfull_local"
-       DO i = 1, SIZE(nfull_local)
-        PRINT*, nfull_local(i)
-       END DO
-       
-       PRINT*, "pdims"
-       DO i = 1, SIZE(pdims)
-        PRINT*, pdims(i)
-       END DO
-       
-       PRINT*, "my_ploc"
-       DO i = 1, SIZE(my_ploc)
-        PRINT*, my_ploc(i)
-       END DO
-       
-#:for ddim in ddims
-
-       IF (tensor_dim .GE. ${ddim}$) THEN
-
-           PRINT*, "blks_local_${ddim}$"
-           DO i = 1, SIZE(blks_local_${ddim}$)
-            PRINT*, blks_local_${ddim}$(i)
-           END DO
-           
-           PRINT*, "proc_dist_${ddim}$"
-           DO i = 1, SIZE(proc_dist_${ddim}$)
-            PRINT*, proc_dist_${ddim}$(i)
-           END DO
-           
-           PRINT*, "blk_size_${ddim}$"
-           DO i = 1, SIZE(blk_size_${ddim}$)
-            PRINT*, blk_size_${ddim}$(i)
-           END DO
-           
-           PRINT*, "blk_offset_${ddim}$"
-           DO i = 1, SIZE(blk_offset_${ddim}$)
-            PRINT*, blk_offset_${ddim}$(i)
-           END DO
-  
-       ENDIF
-  
-  
-#:endfor    
-!9999 CONTINUE
           
-       CALL dbcsr_t_get_stored_coordinates(tensor, ind_nd+1, c_processor)
+      CALL dbcsr_t_get_stored_coordinates(tensor, ind_nd+1, c_processor)
       
    END SUBROUTINE
    
@@ -735,13 +608,9 @@ CONTAINS
       INTEGER, DIMENSION(:), ALLOCATABLE :: ${varlist("blk_ind")}$
       INTEGER :: i
       
-      PRINT*, "INT RESERVE"
 #:for ddim in ddims
       IF (PRESENT(c_blk_ind_${ddim}$)) THEN
          blk_ind_${ddim}$ = c_blk_ind_${ddim}$ + 1
-         DO i = 1, SIZE(blk_ind_${ddim}$)
-            PRINT*, blk_ind_${ddim}$(i)
-         END DO
       ENDIF
 #:endfor
 

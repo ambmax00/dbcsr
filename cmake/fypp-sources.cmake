@@ -25,13 +25,11 @@ function (ADD_FYPP_SOURCES OUTVAR)
     endif ()
 
     if ("${f}" MATCHES ".F$")
-      message(STATUS "Processing a fotran thing...")	    
       # append the output file to the list of outputs
       list(APPEND outfiles "${of}")
       # now add the custom command to generate the output file
       add_custom_command(OUTPUT "${of}" COMMAND ${FYPP_EXECUTABLE} ARGS "${f}" "${of}" DEPENDS "${f}")
     elseif("${f}" MATCHES ".h$")
-      message(STATUS "Processing header...")
      # append the output file to the list of outputs
       list(APPEND outfiles "${of}")
       # now add the custom command to generate the output file

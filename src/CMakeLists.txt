@@ -242,7 +242,10 @@ endforeach ()
 
 if (WITH_C_API)
   # Build the C API as a separate library
-  add_fypp_sources(DBCSR_C_SRCS dbcsr_api_c.F)
+  add_fypp_sources(DBCSR_C_SRCS 
+	  dbcsr_api_c.F 
+	  dbcsr_tensor_api_c.F
+	  dbcsr_tensor.h)
 
   add_library(dbcsr_c ${DBCSR_C_SRCS})
   set_target_properties(dbcsr_c PROPERTIES
@@ -251,8 +254,8 @@ if (WITH_C_API)
   target_link_libraries(dbcsr_c PRIVATE dbcsr)
   target_link_libraries(dbcsr_c PUBLIC MPI::MPI_C)  # the C API always needs MPI
   target_include_directories(dbcsr_c PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}> #change order so compiler first checks binary directory
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     )
 endif ()
@@ -276,6 +279,7 @@ if (WITH_C_API)
     ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
     )
   install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/dbcsr.h"
+	  "${CMAKE_CURRENT_BINARY_DIR}/dbcsr_tensor.h"
     COMPONENT C
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
     )

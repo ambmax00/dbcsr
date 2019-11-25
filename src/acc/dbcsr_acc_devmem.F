@@ -7,11 +7,8 @@
 ! SPDX-License-Identifier: GPL-2.0+                                                                !
 !--------------------------------------------------------------------------------------------------!
 
-! **************************************************************************************************
-!> \brief   Accelerator support
-!> \author  Ole Schuett
-! **************************************************************************************************
 MODULE dbcsr_acc_devmem
+   !! Accelerator support
 #if  defined (__DBCSR_ACC)
    USE ISO_C_BINDING, ONLY: C_INT, C_SIZE_T, C_PTR, C_LOC, C_NULL_PTR
 #endif
@@ -80,36 +77,36 @@ MODULE dbcsr_acc_devmem
 #if  defined (__DBCSR_ACC)
 
    INTERFACE
-      FUNCTION dc_dev_mem_info_cu(free, avail) RESULT(istat) BIND(C, name="acc_dev_mem_info")
+      FUNCTION acc_interface_dev_mem_info(free, avail) RESULT(istat) BIND(C, name="acc_dev_mem_info")
          IMPORT
          INTEGER(KIND=C_INT), INTENT(OUT)         :: free, avail
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_dev_mem_info_cu
+      END FUNCTION acc_interface_dev_mem_info
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_dev_mem_alloc(mem, n) RESULT(istat) BIND(C, name="acc_dev_mem_allocate")
+      FUNCTION acc_interface_dev_mem_alloc(mem, n) RESULT(istat) BIND(C, name="acc_dev_mem_allocate")
          IMPORT
          TYPE(C_PTR)                              :: mem
          INTEGER(KIND=C_SIZE_T), INTENT(IN), &
             VALUE                                  :: n
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_dev_mem_alloc
+      END FUNCTION acc_interface_dev_mem_alloc
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_dev_mem_dealloc(mem) RESULT(istat) BIND(C, name="acc_dev_mem_deallocate")
+      FUNCTION acc_interface_dev_mem_dealloc(mem) RESULT(istat) BIND(C, name="acc_dev_mem_deallocate")
          IMPORT
          TYPE(C_PTR), VALUE                       :: mem
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_dev_mem_dealloc
+      END FUNCTION acc_interface_dev_mem_dealloc
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_acc_dev_mem_set_ptr(mem, other, lb) RESULT(istat) BIND(C, name="acc_dev_mem_set_ptr")
+      FUNCTION acc_interface_dev_mem_set_ptr(mem, other, lb) RESULT(istat) BIND(C, name="acc_dev_mem_set_ptr")
          IMPORT
          TYPE(C_PTR)                              :: mem
          TYPE(C_PTR), VALUE                       :: other
@@ -117,11 +114,11 @@ MODULE dbcsr_acc_devmem
             VALUE                                :: lb
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_acc_dev_mem_set_ptr
+      END FUNCTION acc_interface_dev_mem_set_ptr
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memzero_cu(this, offset, length, stream_ptr) RESULT(istat) BIND(C, name="acc_memset_zero")
+      FUNCTION acc_interface_memzero(this, offset, length, stream_ptr) RESULT(istat) BIND(C, name="acc_memset_zero")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: this
          INTEGER(KIND=C_SIZE_T), INTENT(IN), &
@@ -129,11 +126,11 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memzero_cu
+      END FUNCTION acc_interface_memzero
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memcpy_h2d_cu(host, dev, count, stream_ptr) RESULT(istat) &
+      FUNCTION acc_interface_memcpy_h2d(host, dev, count, stream_ptr) RESULT(istat) &
          BIND(C, name="acc_memcpy_h2d")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: host
@@ -143,11 +140,11 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memcpy_h2d_cu
+      END FUNCTION acc_interface_memcpy_h2d
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memcpy_d2h_cu(dev, host, count, stream_ptr) RESULT(istat) &
+      FUNCTION acc_interface_memcpy_d2h(dev, host, count, stream_ptr) RESULT(istat) &
          BIND(C, name="acc_memcpy_d2h")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: dev
@@ -157,11 +154,11 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memcpy_d2h_cu
+      END FUNCTION acc_interface_memcpy_d2h
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memcpy_d2d_cu(dev_src, dev_dst, count, stream_ptr) RESULT(istat) &
+      FUNCTION acc_interface_memcpy_d2d(dev_src, dev_dst, count, stream_ptr) RESULT(istat) &
          BIND(C, name="acc_memcpy_d2d")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: dev_src
@@ -171,28 +168,26 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memcpy_d2d_cu
+      END FUNCTION acc_interface_memcpy_d2d
    END INTERFACE
 
 #endif
 
 CONTAINS
 
-! **************************************************************************************************
-!> \brief Ensures that given devmem has at least the requested size.
-!> \param[in,out] this device memory
-!> \param[in] stream on which zeroing and memcopying is performed
-!> \param[in] requested_size_in_bytes requested size in bytes
-!> \param[in] nocopy (optional) if after growin old content should NOT be copied over. Default: false.
-!> \param[in] zero_pad (optional) if after growing the new memory should be zeroed. Default: false.
-!> \author Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_devmem_ensure_size_bytes(this, stream, requested_size_in_bytes, nocopy, zero_pad)
+      !! Ensures that given devmem has at least the requested size.
+
       TYPE(acc_devmem_type), &
          INTENT(INOUT)                          :: this
+         !! device memory
       TYPE(acc_stream_type), INTENT(IN) :: stream
+         !! on which zeroing and memcopying is performed
       INTEGER, INTENT(IN)                      :: requested_size_in_bytes
+         !! requested size in bytes
       LOGICAL, INTENT(IN), OPTIONAL            :: nocopy, zero_pad
+         !! if after growin old content should NOT be copied over. Default: false.
+         !! if after growing the new memory should be zeroed. Default: false.
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)
@@ -220,7 +215,7 @@ CONTAINS
          old_cptr = this%cptr
 
          new_cptr = C_NULL_PTR
-         istat = dc_dev_mem_alloc(new_cptr, INT(new_size, KIND=C_SIZE_T))
+         istat = acc_interface_dev_mem_alloc(new_cptr, INT(new_size, KIND=C_SIZE_T))
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_ensure_size_bytes: alloc failed")
 
@@ -236,13 +231,13 @@ CONTAINS
          IF (PRESENT(nocopy)) my_nocopy = nocopy
          IF (.NOT. my_nocopy) THEN
             stream_cptr = acc_stream_cptr(stream)
-            istat = dc_memcpy_d2d_cu(old_cptr, new_cptr, INT(old_size, KIND=C_SIZE_T), stream_cptr)
+            istat = acc_interface_memcpy_d2d(old_cptr, new_cptr, INT(old_size, KIND=C_SIZE_T), stream_cptr)
             IF (istat /= 0) &
                DBCSR_ABORT("acc_devmem_ensure_size_bytes: memcpy failed")
          ENDIF
 
          CALL acc_stream_synchronize(stream)
-         istat = dc_dev_mem_dealloc(old_cptr)
+         istat = acc_interface_dev_mem_dealloc(old_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_ensure_size_bytes: dealloc failed")
 
@@ -250,58 +245,50 @@ CONTAINS
 #endif
    END SUBROUTINE acc_devmem_ensure_size_bytes
 
-! **************************************************************************************************
-!> \brief Returns a logical, which indicates if the given devmem is allocated.
-!> \param[in] this device memory
-!> \return true if device memory is allocated, false otherwise
-!> \author  Ole Schuett
-! **************************************************************************************************
    FUNCTION acc_devmem_allocated(this) RESULT(res)
+      !! Returns a logical, which indicates if the given devmem is allocated.
+
       TYPE(acc_devmem_type), INTENT(IN)                  :: this
+         !! device memory
       LOGICAL                                            :: res
+         !! true if device memory is allocated, false otherwise
 
       res = this%size_in_bytes >= 0
    END FUNCTION acc_devmem_allocated
 
-! **************************************************************************************************
-!> \brief Returns size of given devmem in terms of item count (not bytes!)
-!> \param[in] this device memory
-!> \return size of device memory (item count)
-!> \author  Ole Schuett
-! **************************************************************************************************
    FUNCTION acc_devmem_size_in_bytes(this) RESULT(res)
+      !! Returns size of given devmem in terms of item count (not bytes!)
+
       TYPE(acc_devmem_type), INTENT(IN)                  :: this
+         !! device memory
       INTEGER                                            :: res
+         !! size of device memory (item count)
 
       IF (this%size_in_bytes < 0) &
          DBCSR_ABORT("acc_devmem_len: not allocated")
       res = this%size_in_bytes
    END FUNCTION acc_devmem_size_in_bytes
 
-! **************************************************************************************************
-!> \brief Returns C-pointer to data of given devmem.
-!> \param[in] this device memory
-!> \return false (accelerator support is not enabled)
-!> \author  Ole Schuett
-! **************************************************************************************************
 #if ! defined (__DBCSR_ACC)
    FUNCTION acc_devmem_cptr(this) RESULT(res)
+      !! Returns C-pointer to data of given devmem.
+
       INTEGER, INTENT(IN)                                :: this
+         !! device memory
       LOGICAL                                            :: res
+         !! false (accelerator support is not enabled)
 
       MARK_USED(this)
       res = .FALSE.
    END FUNCTION acc_devmem_cptr
 #else
-! **************************************************************************************************
-!> \brief Returns C-pointer to data of given devmem.
-!> \param[in] this device memory
-!> \return C-pointer to data of given devmem
-!> \author  Ole Schuett
-! **************************************************************************************************
    FUNCTION acc_devmem_cptr(this) RESULT(res)
+      !! Returns C-pointer to data of given devmem.
+
       TYPE(acc_devmem_type), INTENT(IN)                  :: this
+         !! device memory
       TYPE(C_PTR)                                        :: res
+         !! C-pointer to data of given devmem
 
       IF (this%size_in_bytes < 0) &
          DBCSR_ABORT("acc_devmem_cptr: not allocated")
@@ -309,16 +296,14 @@ CONTAINS
    END FUNCTION acc_devmem_cptr
 #endif
 
-! **************************************************************************************************
-!> \brief Allocates a given devmem.
-!> \param[in,out] this device memory
-!> \param[in] size_in_bytes size in bytes
-!> \author  Alfio Lazzaro
-! **************************************************************************************************
    SUBROUTINE acc_devmem_set_cptr(this, pointee, size_in_bytes, lb_in_bytes)
+      !! Allocates a given devmem.
+
       TYPE(acc_devmem_type), INTENT(INOUT)     :: this
+         !! device memory
       TYPE(acc_devmem_type), INTENT(IN)        :: pointee
       INTEGER, INTENT(IN)                      :: size_in_bytes, lb_in_bytes
+         !! size in bytes
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)
@@ -331,14 +316,14 @@ CONTAINS
       INTEGER                                  :: istat
 
       IF (this%size_in_bytes >= 0) &
-         DBCSR_ABORT("acc_devmem_sep_cptr: already allocated")
+         DBCSR_ABORT("acc_devmem_set_cptr: already allocated")
       IF (pointee%size_in_bytes < 0 .AND. size_in_bytes > 0) &
-         DBCSR_ABORT("acc_devmem_sep_cptr: out-of-bounds")
+         DBCSR_ABORT("acc_devmem_set_cptr: out-of-bounds")
       IF (size_in_bytes > 0) THEN
          IF ((lb_in_bytes + size_in_bytes) .GT. pointee%size_in_bytes) &
             DBCSR_ABORT("acc_devmem_set_cptr: out-of-bounds")
          this%size_in_bytes = size_in_bytes
-         istat = dc_acc_dev_mem_set_ptr(this%cptr, pointee%cptr, INT(lb_in_bytes, KIND=C_SIZE_T))
+         istat = acc_interface_dev_mem_set_ptr(this%cptr, pointee%cptr, INT(lb_in_bytes, KIND=C_SIZE_T))
       ELSE
          ! Empty buffers
          this%size_in_bytes = pointee%size_in_bytes
@@ -347,35 +332,31 @@ CONTAINS
 #endif
    END SUBROUTINE acc_devmem_set_cptr
 
-! **************************************************************************************************
-!> \brief Fortran-wrapper for cudaMemGetInfo.
-!> \param[out] free free device memory
-!> \param[out] avail available device memory
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_devmem_info(free, avail)
+      !! Fortran-wrapper for getting GPU memory info.
+
       INTEGER, INTENT(OUT)                     :: free, avail
+         !! free device memory
+         !! available device memory
 
 #if ! defined (__DBCSR_ACC)
       avail = -1; free = -1 ! assign intent-out arguments to silence compiler warnings
       DBCSR_ABORT("__DBCSR_ACC not compiled in.")
 #else
       INTEGER                                  :: istat
-      istat = dc_dev_mem_info_cu(free, avail)
+      istat = acc_interface_dev_mem_info(free, avail)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_devmem_info: failed.")
 #endif
    END SUBROUTINE acc_devmem_info
 
-! **************************************************************************************************
-!> \brief Allocates a given devmem.
-!> \param[in,out] this device memory
-!> \param[in] size_in_bytes size in bytes
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_devmem_allocate_bytes(this, size_in_bytes)
+      !! Allocates a given devmem.
+
       TYPE(acc_devmem_type), INTENT(INOUT)     :: this
+         !! device memory
       INTEGER, INTENT(IN)                      :: size_in_bytes
+         !! size in bytes
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)
@@ -391,20 +372,18 @@ CONTAINS
          DBCSR_ABORT("acc_devmem_alloc: already allocated")
       this%size_in_bytes = size_in_bytes
       IF (size_in_bytes > 0) THEN
-         istat = dc_dev_mem_alloc(this%cptr, INT(this%size_in_bytes, KIND=C_SIZE_T))
+         istat = acc_interface_dev_mem_alloc(this%cptr, INT(this%size_in_bytes, KIND=C_SIZE_T))
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_allocate: failed.")
       END IF
 #endif
    END SUBROUTINE acc_devmem_allocate_bytes
 
-! **************************************************************************************************
-!> \brief Deallocates a given devmem.
-!> \param[in,out] this device memory
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_devmem_deallocate(this)
+      !! Deallocates a given devmem.
+
       TYPE(acc_devmem_type), INTENT(INOUT) :: this
+         !! device memory
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)
@@ -418,7 +397,7 @@ CONTAINS
       IF (this%size_in_bytes < 0) &
          DBCSR_ABORT("acc_devmem_deallocate: double free")
       IF (this%size_in_bytes > 0) THEN
-         istat = dc_dev_mem_dealloc(this%cptr)
+         istat = acc_interface_dev_mem_dealloc(this%cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_deallocate: failed")
       END IF
@@ -428,18 +407,16 @@ CONTAINS
 #endif
    END SUBROUTINE acc_devmem_deallocate
 
-! **************************************************************************************************
-!> \brief Sets entries in given devmem to zero, asynchronously.
-!> \param[in,out] this device memory
-!> \param[in] first_byte (optional) begin of region to zero, defaults to 1 if not given.
-!> \param[in] last_byte (optional) end of region to zero, defaults to size if not given.
-!> \param[in] stream stream on which zeroing is performed.
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_devmem_setzero_bytes(this, first_byte, last_byte, stream)
+      !! Sets entries in given devmem to zero, asynchronously.
+
       TYPE(acc_devmem_type), INTENT(INOUT) :: this
+         !! device memory
       INTEGER, INTENT(IN), OPTIONAL        :: first_byte, last_byte
+         !! begin of region to zero, defaults to 1 if not given.
+         !! end of region to zero, defaults to size if not given.
       TYPE(acc_stream_type), INTENT(IN)    :: stream
+         !! stream on which zeroing is performed.
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)
@@ -456,34 +433,38 @@ CONTAINS
       TYPE(C_PTR)                              :: stream_cptr
 
       offset = 0
-      IF (PRESENT(first_byte)) offset = first_byte - 1
-      length = this%size_in_bytes - offset
-      IF (PRESENT(last_byte)) length = last_byte - offset
+      length = this%size_in_bytes
+      IF (PRESENT(first_byte)) THEN
+         offset = first_byte - 1
+         length = length - offset
+      ENDIF
+      IF (PRESENT(last_byte)) THEN
+         length = last_byte
+         IF (PRESENT(first_byte)) length = length - first_byte
+      ENDIF
 
       stream_cptr = acc_stream_cptr(stream)
 
       IF (length > 0) THEN
-         istat = dc_memzero_cu(this%cptr, offset, length, stream_cptr)
+         istat = acc_interface_memzero(this%cptr, offset, length, stream_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_setzero: failed")
       ENDIF
 #endif
    END SUBROUTINE acc_devmem_setzero_bytes
 
-! **************************************************************************************************
-!> \brief Helper-routine performing actuall host2dev transfers.
-!> \param[in] this device memory
-!> \param hostmem_cptr host memory
-!> \param[in] n_bytes number of bytes
-!> \param[in] stream stream used for memory transfer
-!> \author  Ole Schuett
-! **************************************************************************************************
 #if defined (__DBCSR_ACC)
    SUBROUTINE host2dev_raw(this, hostmem_cptr, n_bytes, stream)
+      !! Helper-routine performing actuall host2dev transfers.
+
       TYPE(acc_devmem_type), INTENT(IN)                  :: this
+         !! device memory
       TYPE(C_PTR)                                        :: hostmem_cptr
+         !! host memory
       INTEGER, INTENT(IN)                                :: n_bytes
+         !! number of bytes
       TYPE(acc_stream_type), INTENT(IN)                  :: stream
+         !! stream used for memory transfer
 
       CHARACTER(len=*), PARAMETER :: routineN = 'host2dev_raw', routineP = moduleN//':'//routineN
 
@@ -495,28 +476,26 @@ CONTAINS
 
       stream_cptr = acc_stream_cptr(stream)
       IF (n_bytes > 0) THEN
-         istat = dc_memcpy_h2d_cu(hostmem_cptr, this%cptr, &
-                                  INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
+         istat = acc_interface_memcpy_h2d(hostmem_cptr, this%cptr, &
+                                          INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_host2dev: failed")
       ENDIF
    END SUBROUTINE host2dev_raw
 #endif
 
-! **************************************************************************************************
-!> \brief Helper-routine performing actual dev2host transfers.
-!> \param[in] this device memory
-!> \param hostmem_cptr host memory
-!> \param[in] n_bytes number of bytes
-!> \param[in] stream stream used for memory transfer
-!> \author  Ole Schuett
-! **************************************************************************************************
 #if defined (__DBCSR_ACC)
    SUBROUTINE dev2host_raw(this, hostmem_cptr, n_bytes, stream)
+      !! Helper-routine performing actual dev2host transfers.
+
       TYPE(acc_devmem_type), INTENT(IN)                  :: this
+         !! device memory
       TYPE(C_PTR)                                        :: hostmem_cptr
+         !! host memory
       INTEGER, INTENT(IN)                                :: n_bytes
+         !! number of bytes
       TYPE(acc_stream_type), INTENT(IN)                  :: stream
+         !! stream used for memory transfer
 
       CHARACTER(len=*), PARAMETER :: routineN = 'dev2host_raw', routineP = moduleN//':'//routineN
 
@@ -531,8 +510,8 @@ CONTAINS
       stream_cptr = acc_stream_cptr(stream)
 
       IF (n_bytes > 0) THEN
-         istat = dc_memcpy_d2h_cu(this%cptr, hostmem_cptr, &
-                                  INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
+         istat = acc_interface_memcpy_d2h(this%cptr, hostmem_cptr, &
+                                          INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_dev2host: failed")
       ENDIF
@@ -548,17 +527,15 @@ CONTAINS
 
 #:for nametype, size, type in instances
 
-! **************************************************************************************************
-!> \brief Transfers 1D fortran-array from host to cuda devmem.
-!> \param[in] this device memory
-!> \param hostmem host memory
-!> \param[in] stream stream
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE host2dev_${nametype}$_1D(this, hostmem, stream)
+      !! Transfers 1D fortran-array from host to GPU devmem.
+
       TYPE(acc_devmem_type), INTENT(IN)        :: this
+         !! device memory
       ${type}$, DIMENSION(:), POINTER          :: hostmem
+         !! host memory
       TYPE(acc_stream_type), INTENT(IN)        :: stream
+         !! stream
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)
@@ -570,17 +547,15 @@ CONTAINS
 #endif
    END SUBROUTINE host2dev_${nametype}$_1D
 
-! **************************************************************************************************
-!> \brief Transfers 2D fortran-array from host to cuda devmem.
-!> \param[in] this device memory
-!> \param hostmem host memory
-!> \param[in] stream stream
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE host2dev_${nametype}$_2D(this, hostmem, stream)
+      !! Transfers 2D fortran-array from host to GPU devmem.
+
       TYPE(acc_devmem_type), INTENT(IN)        :: this
+         !! device memory
       ${type}$, DIMENSION(:, :), POINTER       :: hostmem
+         !! host memory
       TYPE(acc_stream_type), INTENT(IN)        :: stream
+         !! stream
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)
@@ -592,17 +567,15 @@ CONTAINS
 #endif
    END SUBROUTINE host2dev_${nametype}$_2D
 
-! **************************************************************************************************
-!> \brief Transfers cuda devmem to 1D fortran-array.
-!> \param[in] this device memory
-!> \param hostmem host memory
-!> \param[in] stream stream
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE dev2host_${nametype}$_1D(this, hostmem, stream)
+      !! Transfers GPU devmem to 1D fortran-array.
+
       TYPE(acc_devmem_type), INTENT(IN)        :: this
+         !! device memory
       ${type}$, DIMENSION(:), POINTER          :: hostmem
+         !! host memory
       TYPE(acc_stream_type), INTENT(IN)        :: stream
+         !! stream
 
 #if ! defined (__DBCSR_ACC)
       MARK_USED(this)

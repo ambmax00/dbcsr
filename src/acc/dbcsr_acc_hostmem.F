@@ -7,12 +7,8 @@
 ! SPDX-License-Identifier: GPL-2.0+                                                                !
 !--------------------------------------------------------------------------------------------------!
 
-! **************************************************************************************************
-!> \brief   Accelerator support
-!> \author  Ole Schuett
-!> \date    2013-04
-! **************************************************************************************************
 MODULE dbcsr_acc_hostmem
+   !! Accelerator support
 #if defined (__DBCSR_ACC)
    USE ISO_C_BINDING, ONLY: C_INT, C_SIZE_T, C_PTR, C_LOC, C_F_POINTER
 #endif
@@ -60,7 +56,7 @@ MODULE dbcsr_acc_hostmem
 #if defined (__DBCSR_ACC)
 
    INTERFACE
-      FUNCTION cuda_host_mem_alloc_cu(mem, n, stream_ptr) RESULT(istat) BIND(C, name="acc_host_mem_allocate")
+      FUNCTION acc_interface_host_mem_alloc(mem, n, stream_ptr) RESULT(istat) BIND(C, name="acc_host_mem_allocate")
          IMPORT
          TYPE(C_PTR)                              :: mem
          INTEGER(KIND=C_SIZE_T), INTENT(IN), &
@@ -68,32 +64,30 @@ MODULE dbcsr_acc_hostmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION cuda_host_mem_alloc_cu
+      END FUNCTION acc_interface_host_mem_alloc
    END INTERFACE
 
    INTERFACE
-      FUNCTION cuda_host_mem_dealloc_cu(mem, stream_ptr) RESULT(istat) bind(C, name="acc_host_mem_deallocate")
+      FUNCTION acc_interface_host_mem_dealloc(mem, stream_ptr) RESULT(istat) bind(C, name="acc_host_mem_deallocate")
          IMPORT
          TYPE(C_PTR), VALUE                       :: mem, stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION cuda_host_mem_dealloc_cu
+      END FUNCTION acc_interface_host_mem_dealloc
    END INTERFACE
 
 #endif
 
 CONTAINS
 
-! **************************************************************************************************
-!> \brief Helper-routine performing allocation of host-pinned cuda memory.
-!> \param host_mem_c_ptr pointer to allocated memory
-!> \param n_bytes number of bytes to allocate
-!> \param stream ...
-! **************************************************************************************************
 #if defined (__DBCSR_ACC)
    SUBROUTINE acc_hostmem_alloc_raw(host_mem_c_ptr, n_bytes, stream)
+      !! Helper-routine performing allocation of host-pinned GPU memory.
+
       TYPE(C_PTR), INTENT(OUT)                           :: host_mem_c_ptr
+         !! pointer to allocated memory
       INTEGER, INTENT(IN)                                :: n_bytes
+         !! number of bytes to allocate
       TYPE(acc_stream_type), INTENT(IN)                  :: stream
 
       CHARACTER(len=*), PARAMETER :: routineN = 'acc_hostmem_alloc_raw', &
@@ -107,18 +101,13 @@ CONTAINS
 
       stream_cptr = acc_stream_cptr(stream)
 
-      istat = cuda_host_mem_alloc_cu(host_mem_c_ptr, INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
+      istat = acc_interface_host_mem_alloc(host_mem_c_ptr, INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_hostmem_alloc_raw: Could not allocate host pinned memory")
    END SUBROUTINE acc_hostmem_alloc_raw
 #endif
 
 #if defined (__DBCSR_ACC)
-! **************************************************************************************************
-!> \brief ...
-!> \param host_mem_c_ptr ...
-!> \param stream ...
-! **************************************************************************************************
    SUBROUTINE acc_hostmem_dealloc_raw(host_mem_c_ptr, stream)
       TYPE(C_PTR), INTENT(IN)                            :: host_mem_c_ptr
       TYPE(acc_stream_type), INTENT(IN)                  :: stream
@@ -137,7 +126,7 @@ CONTAINS
 
       stream_cptr = acc_stream_cptr(stream)
 
-      istat = cuda_host_mem_dealloc_cu(host_mem_c_ptr, stream_cptr)
+      istat = acc_interface_host_mem_dealloc(host_mem_c_ptr, stream_cptr)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_hostmem_dealloc_raw: Could not deallocate host pinned memory")
 !$OMP END CRITICAL
@@ -153,16 +142,13 @@ CONTAINS
 
 #:for nametype, size, type in instances
 
-! **************************************************************************************************
-!> \brief Allocates 1D fortan-array as cuda host-pinned memory.
-!> \param host_mem pointer to array
-!> \param n size given in terms of item-count (not bytes!)
-!> \param stream ...
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_hostmem_alloc_${nametype}$ (host_mem, n, stream)
+      !! Allocates 1D fortan-array as GPU host-pinned memory.
+
       ${type}$, DIMENSION(:), POINTER          :: host_mem
+         !! pointer to array
       INTEGER, INTENT(IN)                      :: n
+         !! size given in terms of item-count (not bytes!)
       TYPE(acc_stream_type), INTENT(IN)        :: stream
 #if defined (__DBCSR_ACC)
       TYPE(C_PTR)                              :: host_mem_c_ptr
@@ -177,17 +163,14 @@ CONTAINS
 #endif
    END SUBROUTINE acc_hostmem_alloc_${nametype}$
 
-! **************************************************************************************************
-!> \brief Allocates 2D fortan-array as cuda host-pinned memory.
-!> \param host_mem pointer to array
-!> \param n1 sizes given in terms of item-count (not bytes!)
-!> \param n2 sizes given in terms of item-count (not bytes!)
-!> \param stream ...
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_hostmem_alloc_${nametype}$_2D(host_mem, n1, n2, stream)
+      !! Allocates 2D fortan-array as GPU host-pinned memory.
+
       ${type}$, DIMENSION(:, :), POINTER        :: host_mem
+         !! pointer to array
       INTEGER, INTENT(IN)                      :: n1, n2
+         !! sizes given in terms of item-count (not bytes!)
+         !! sizes given in terms of item-count (not bytes!)
       TYPE(acc_stream_type), INTENT(IN)        :: stream
 #if defined (__DBCSR_ACC)
       TYPE(C_PTR)                              :: host_mem_c_ptr
@@ -205,14 +188,11 @@ CONTAINS
 #endif
    END SUBROUTINE acc_hostmem_alloc_${nametype}$_2D
 
-! **************************************************************************************************
-!> \brief Deallocates a 1D fortan-array, which is cuda host-pinned memory.
-!> \param host_mem pointer to array
-!> \param stream ...
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_hostmem_dealloc_${nametype}$ (host_mem, stream)
+      !! Deallocates a 1D fortan-array, which is GPU host-pinned memory.
+
       ${type}$, DIMENSION(:), POINTER          :: host_mem
+         !! pointer to array
       TYPE(acc_stream_type), INTENT(IN)        :: stream
       CHARACTER(len=*), PARAMETER :: routineN = 'acc_hostmem_dealloc_${nametype}$', &
                                      routineP = moduleN//':'//routineN
@@ -227,14 +207,11 @@ CONTAINS
 #endif
    END SUBROUTINE acc_hostmem_dealloc_${nametype}$
 
-! **************************************************************************************************
-!> \brief Deallocates a 2D fortan-array, which is cuda host-pinned memory.
-!> \param host_mem pointer to array
-!> \param stream ...
-!> \author  Ole Schuett
-! **************************************************************************************************
    SUBROUTINE acc_hostmem_dealloc_${nametype}$_2D(host_mem, stream)
+      !! Deallocates a 2D fortan-array, which is GPU host-pinned memory.
+
       ${type}$, DIMENSION(:, :), POINTER        :: host_mem
+         !! pointer to array
       TYPE(acc_stream_type), INTENT(IN)        :: stream
       CHARACTER(len=*), PARAMETER :: routineN = 'acc_hostmem_dealloc_${nametype}$_2D', &
                                      routineP = moduleN//':'//routineN

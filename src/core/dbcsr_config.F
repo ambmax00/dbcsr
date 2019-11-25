@@ -7,18 +7,11 @@
 ! SPDX-License-Identifier: GPL-2.0+                                                                !
 !--------------------------------------------------------------------------------------------------!
 
-! **************************************************************************************************
-!> \brief   Configuration options for DBCSR
-!> \author  Urban Borstnik
-!> \date    2011-04-05
-!> \version 1.0
-!>
-!> <b>Modification history:</b>
-!> - Created 2011-04-05
-! **************************************************************************************************
 MODULE dbcsr_config
+   !! Configuration options for DBCSR
    USE dbcsr_acc_device, ONLY: dbcsr_acc_get_ndevices
    USE dbcsr_cublas, ONLY: cublas_handle_type
+   USE dbcsr_hipblas, ONLY: hipblas_handle_type
    USE dbcsr_kinds, ONLY: default_string_length, &
                           dp
    USE dbcsr_ptr_util, ONLY: dbcsr_data_allocation, &
@@ -104,7 +97,7 @@ MODULE dbcsr_config
       INTEGER  :: num_layers_3D = 1
       LOGICAL  :: use_comm_thread = .TRUE.
       INTEGER  :: comm_thread_load = 100
-#if !defined (__DBCSR_ACC) || (__DBCSR_ACC == 2)
+#if !defined (__DBCSR_ACC) || (__DBCSR_ACC == 2) || (__DBCSR_ACC == 3)
       LOGICAL  :: mm_densification = .TRUE.
 #else
       LOGICAL  :: mm_densification = .FALSE.
@@ -121,12 +114,15 @@ MODULE dbcsr_config
       LOGICAL  :: accdrv_do_inhomogenous = .TRUE.
       INTEGER  :: accdrv_binning_nbins = 4096
       INTEGER  :: accdrv_binning_binsize = 16
+      LOGICAL  :: use_mempools_cpu = .FALSE.
    END TYPE dbcsr_config_type
 
    TYPE(dbcsr_config_type), PROTECTED, SAVE :: dbcsr_cfg = dbcsr_config_type() ! defaults
 
    ! CUBLAS handle (a handle per each thread)
    TYPE(cublas_handle_type), DIMENSION(:), ALLOCATABLE :: cublas_handles
+   ! HIPBLAS handle (a handle per each thread)
+   TYPE(hipblas_handle_type), DIMENSION(:), ALLOCATABLE :: hipblas_handles
 
    ! Max dimension for any block dimension
    INTEGER, PARAMETER :: max_kernel_dim = 80
@@ -135,36 +131,11 @@ MODULE dbcsr_config
    PUBLIC :: mm_driver_blas, mm_driver_matmul, mm_driver_smm, mm_driver_xsmm, mm_driver_auto
    PUBLIC :: dbcsr_set_config, dbcsr_get_default_config, dbcsr_print_config
    PUBLIC :: cublas_handles
+   PUBLIC :: hipblas_handles
    PUBLIC :: max_kernel_dim
 
 CONTAINS
 
-! **************************************************************************************************
-!> \brief ...
-!> \param mm_driver ...
-!> \param use_mpi_allocator ...
-!> \param mm_stack_size ...
-!> \param avg_elements_images Maximum number of elements for each image
-!> \param num_mult_images Multiplicative factor for number of virtual images
-!> \param nstacks Number of stacks to use
-!> \param use_mpi_rma RMA algorithm
-!> \param num_layers_3D 3D layers
-!> \param use_comm_thread ...
-!> \param comm_thread_load ...
-!> \param mm_densification ...
-!> \param multrec_limit ...
-!> \param accdrv_priority_streams ...
-!> \param accdrv_priority_buffers ...
-!> \param accdrv_posterior_streams ...
-!> \param accdrv_posterior_buffers ...
-!> \param accdrv_avoid_after_busy ...
-!> \param accdrv_min_flop_process ...
-!> \param accdrv_stack_sort ...
-!> \param accdrv_min_flop_sort ...
-!> \param accdrv_do_inhomogenous ...
-!> \param accdrv_binning_nbins ...
-!> \param accdrv_binning_binsize ...
-! **************************************************************************************************
    SUBROUTINE dbcsr_set_config( &
       mm_driver, &
       use_mpi_allocator, &
@@ -188,14 +159,22 @@ CONTAINS
       accdrv_min_flop_sort, &
       accdrv_do_inhomogenous, &
       accdrv_binning_nbins, &
-      accdrv_binning_binsize)
-!
+      accdrv_binning_binsize, &
+      use_mempools_cpu)
+
       CHARACTER(len=*), INTENT(IN), OPTIONAL             :: mm_driver
       LOGICAL, INTENT(IN), OPTIONAL                      :: use_mpi_allocator
-      INTEGER, INTENT(IN), OPTIONAL                      :: mm_stack_size, avg_elements_images, &
-                                                            num_mult_images, nstacks
+      INTEGER, INTENT(IN), OPTIONAL                      :: avg_elements_images
+         !! Maximum number of elements for each image
+      INTEGER, INTENT(IN), OPTIONAL                      :: num_mult_images
+         !! Multiplicative factor for number of virtual images
+      INTEGER, INTENT(IN), OPTIONAL                      :: nstacks
+         !! Number of stacks to use
+      INTEGER, INTENT(IN), OPTIONAL                      :: mm_stack_size
       LOGICAL, INTENT(IN), OPTIONAL                      :: use_mpi_rma
+         !! use_mpi_rma RMA algorithm
       INTEGER, INTENT(IN), OPTIONAL                      :: num_layers_3D
+         !! num_layers_3D 3D layers
       LOGICAL, INTENT(IN), OPTIONAL                      :: use_comm_thread
       INTEGER, INTENT(IN), OPTIONAL                      :: comm_thread_load
       LOGICAL, INTENT(IN), OPTIONAL                      :: mm_densification
@@ -208,6 +187,7 @@ CONTAINS
       LOGICAL, INTENT(IN), OPTIONAL                      :: accdrv_do_inhomogenous
       INTEGER, INTENT(IN), OPTIONAL                      :: accdrv_binning_nbins, &
                                                             accdrv_binning_binsize
+      LOGICAL, INTENT(IN), OPTIONAL                      :: use_mempools_cpu
 
       INTEGER                                            :: nthreads
 
@@ -230,6 +210,7 @@ CONTAINS
       IF (PRESENT(accdrv_do_inhomogenous)) dbcsr_cfg%accdrv_do_inhomogenous = accdrv_do_inhomogenous
       IF (PRESENT(accdrv_binning_nbins)) dbcsr_cfg%accdrv_binning_nbins = accdrv_binning_nbins
       IF (PRESENT(accdrv_binning_binsize)) dbcsr_cfg%accdrv_binning_binsize = accdrv_binning_binsize
+      IF (PRESENT(use_mempools_cpu)) dbcsr_cfg%use_mempools_cpu = use_mempools_cpu
 
       IF (PRESENT(comm_thread_load)) THEN
          dbcsr_cfg%comm_thread_load = comm_thread_load
@@ -276,31 +257,6 @@ CONTAINS
 
    END SUBROUTINE dbcsr_set_config
 
-! **************************************************************************************************
-!> \brief ...
-!> \param use_mpi_allocator ...
-!> \param mm_stack_size ...
-!> \param avg_elements_images ...
-!> \param num_mult_images ...
-!> \param nstacks ...
-!> \param use_mpi_rma ...
-!> \param num_layers_3D ...
-!> \param use_comm_thread ...
-!> \param comm_thread_load ...
-!> \param mm_densification ...
-!> \param multrec_limit ...
-!> \param accdrv_priority_streams ...
-!> \param accdrv_priority_buffers ...
-!> \param accdrv_posterior_streams ...
-!> \param accdrv_posterior_buffers ...
-!> \param accdrv_avoid_after_busy ...
-!> \param accdrv_min_flop_process ...
-!> \param accdrv_stack_sort ...
-!> \param accdrv_min_flop_sort ...
-!> \param accdrv_do_inhomogenous ...
-!> \param accdrv_binning_nbins ...
-!> \param accdrv_binning_binsize ...
-! **************************************************************************************************
    SUBROUTINE dbcsr_get_default_config( &
       use_mpi_allocator, &
       mm_stack_size, &
@@ -323,7 +279,8 @@ CONTAINS
       accdrv_min_flop_sort, &
       accdrv_do_inhomogenous, &
       accdrv_binning_nbins, &
-      accdrv_binning_binsize)
+      accdrv_binning_binsize, &
+      use_mempools_cpu)
 !
       LOGICAL, INTENT(OUT), OPTIONAL                     :: use_mpi_allocator
       INTEGER, INTENT(OUT), OPTIONAL                     :: mm_stack_size, avg_elements_images, &
@@ -342,6 +299,7 @@ CONTAINS
       LOGICAL, INTENT(OUT), OPTIONAL                     :: accdrv_do_inhomogenous
       INTEGER, INTENT(OUT), OPTIONAL                     :: accdrv_binning_nbins, &
                                                             accdrv_binning_binsize
+      LOGICAL, INTENT(OUT), OPTIONAL                     :: use_mempools_cpu
 
       TYPE(dbcsr_config_type)                            :: default_cfg
       TYPE(dbcsr_data_allocation_type)                   :: default_data_allocation
@@ -367,6 +325,7 @@ CONTAINS
       IF (PRESENT(accdrv_do_inhomogenous)) accdrv_do_inhomogenous = default_cfg%accdrv_do_inhomogenous
       IF (PRESENT(accdrv_binning_nbins)) accdrv_binning_nbins = default_cfg%accdrv_binning_nbins
       IF (PRESENT(accdrv_binning_binsize)) accdrv_binning_binsize = default_cfg%accdrv_binning_binsize
+      IF (PRESENT(use_mempools_cpu)) use_mempools_cpu = default_cfg%use_mempools_cpu
 
       DBCSR_ASSERT(default_cfg%nm_stacks == default_cfg%nn_stacks)
       DBCSR_ASSERT(default_cfg%nm_stacks == default_cfg%nk_stacks)
@@ -374,11 +333,8 @@ CONTAINS
 
    END SUBROUTINE dbcsr_get_default_config
 
-! **************************************************************************************************
-!> \brief Prints configuration for DBCSR
-!> \param unit_nr ...
-! **************************************************************************************************
    SUBROUTINE dbcsr_print_config(unit_nr)
+      !! Prints configuration for DBCSR
       INTEGER, INTENT(IN)                                :: unit_nr
 
       CHARACTER(len=default_string_length)               :: mm_name

@@ -26,10 +26,10 @@ def main(out_fn, project_name, mod_format, mode, archive_ext, src_dir, src_files
     src_files = [normpath(path.join(src_dir, f)) for f in src_files]
 
     if mod_format not in ("lower", "upper", "no"):
-        error('Module filename format must be eighter of "lower", "upper", or "no".')
+        error('Module filename format must be either of "lower", "upper", or "no".')
 
     if mode not in ("normal", "hackdep", "mod_compiler"):
-        error('Mode must be eighter of "normal", "hackdep", or "mod_compiler".')
+        error('Mode must be either of "normal", "hackdep", or "mod_compiler".')
 
     for fn in src_files:
         if not fn.startswith("/"):
@@ -353,8 +353,14 @@ def find_cycles(parsed_files, mod2fn, fn, src_dir, S=None):
     for m in pf["module"]:
         if m in S:
             i = S.index(m)
-            error("Circular dependency: " + " -> ".join(S[i:] + [m]))
-        S.append(m)
+            n = S[i:]
+        else:
+            n = []
+
+        if 0 == len(n) or (1 == len(n) and m in n):
+            S.append(m)
+        else:
+            error("Circular dependency: " + " -> ".join(n + [m]))
 
     for m in collect_use_deps(parsed_files, fn, src_dir):
         if m in mod2fn.keys():
@@ -380,8 +386,14 @@ def collect_pkg_deps(packages, p, archives=None, S=None):
 
     if a in S:
         i = S.index(a)
-        error("Circular package dependency: " + " -> ".join(S[i:] + [a]))
-    S.append(a)
+        b = S[i:]
+    else:
+        b = []
+
+    if 0 == len(b) or (1 == len(b) and a in b):
+        S.append(a)
+    else:
+        error("Circular package dependency: " + " -> ".join(b + [a]))
 
     for r in packages[p]["requires"]:
         d = normpath(path.join(p, r))

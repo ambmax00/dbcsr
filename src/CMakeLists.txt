@@ -8,6 +8,7 @@ include(CMakePackageConfigHelpers)
 # SOURCE FILE LISTS
 add_fypp_sources(DBCSR_SRCS
   dbcsr_api.F
+  dbcsr_api_c.F
   acc/cublaswrap/dbcsr_cublas.F
   acc/cuda/dbcsr_cuda_profiling.F
   acc/dbcsr_acc_device.F

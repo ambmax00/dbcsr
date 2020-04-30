@@ -8,7 +8,6 @@ include(CMakePackageConfigHelpers)
 # SOURCE FILE LISTS
 add_fypp_sources(DBCSR_SRCS
   dbcsr_api.F
-  dbcsr_api_c.F
   acc/cublaswrap/dbcsr_cublas.F
   acc/cuda/dbcsr_cuda_profiling.F
   acc/dbcsr_acc_device.F
@@ -319,6 +318,7 @@ if (WITH_C_API)
   # Build the C API as a separate library
   add_fypp_sources(DBCSR_C_SRCS
 	  dbcsr_api_c.F
+	  dbcsr.h
 	  tensors/dbcsr_tensor_api_c.F
 	  tensors/dbcsr_tensor.h)
 

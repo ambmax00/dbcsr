@@ -188,7 +188,7 @@ extern "C" {
    
      int c_dbcsr_t_ndims_matrix_column(const void* c_tensor);
    
-     int c_dbcsr_get_nze(const void* c_tensor);
+     int c_dbcsr_t_get_nze(const void* c_tensor);
      
      long long int c_dbcsr_t_get_nze_total(const void* c_tensor);
      

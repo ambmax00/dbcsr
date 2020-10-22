@@ -566,10 +566,8 @@ CONTAINS
                   END DO
                ENDDO
             CASE (dbcsr_type_real_8)
-               PRINT *, "BLOCK", a_row, a_col
                DO i = 1, a_row_size
                   DO irow = i, i + a_col_size*a_row_size - 1, a_row_size
-                     PRINT *, "SCALING", data_any%d%r_dp(irow), alpha%d%r_dp(row_offset + i - 1)
                      data_any%d%r_dp(irow) = data_any%d%r_dp(irow)*alpha%d%r_dp(row_offset + i - 1)
                   END DO
                ENDDO

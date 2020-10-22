@@ -1,0 +1,6 @@
+data/dbcsr.fypp:#:set normname1 = ['SQRT(DDOT', 'SQRT(SDOT', '(DZNRM2', '(SCNRM2']
+mm/dbcsr_mm_multrec.f90:     REAL(KIND=real_8), EXTERNAL                :: SCNRM2, SDOT
+mm/dbcsr_mm_multrec.f90:     REAL(KIND=real_4), EXTERNAL                :: SCNRM2, SDOT
+ops/dbcsr_operations.F:      REAL(KIND=real_8), EXTERNAL                        :: SCNRM2, SDOT
+ops/dbcsr_operations.F:      REAL(KIND=real_4), EXTERNAL                        :: SCNRM2, SDOT
+ops/dbcsr_operations.F:                  nrm_d = SCNRM2(SIZE(data_c), data_c(1), 1)

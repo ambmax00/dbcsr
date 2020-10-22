@@ -1,0 +1,88 @@
+block/dbcsr_block_access.F:             dbcsr_reserve_blocks, dbcsr_reserve_all_blocks, dbcsr_reserve_diag_blocks
+block/dbcsr_block_access.F:      CALL dbcsr_reserve_blocks(matrix, rows, columns)
+block/dbcsr_block_access.F:      CALL dbcsr_reserve_blocks(matrix, rows, columns)
+block/dbcsr_block_access.F:   SUBROUTINE dbcsr_reserve_blocks(matrix, rows, columns, blk_pointers)
+block/dbcsr_block_access.F:      CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_reserve_blocks', &
+block/dbcsr_block_access.F:   END SUBROUTINE dbcsr_reserve_blocks
+dbcsr_api_c.F:   PUBLIC :: dbcsr_reserve_blocks
+dbcsr_api.F:                                 dbcsr_reserve_blocks_prv => dbcsr_reserve_blocks, &
+dbcsr_api.F:   PUBLIC :: dbcsr_reserve_blocks
+dbcsr_api.F:   SUBROUTINE dbcsr_reserve_blocks(matrix, rows, cols, blk_pointers)
+dbcsr_api.F:      CALL dbcsr_reserve_blocks_prv(matrix%prv, rows, cols, blk_pointers)
+dbcsr_api.F:   END SUBROUTINE dbcsr_reserve_blocks
+ops/dbcsr_operations.F:                                 dbcsr_reserve_blocks, &
+ops/dbcsr_operations.F:         CALL dbcsr_reserve_blocks(matrix_b, row_list(1:new_blk), &
+tas/dbcsr_tas_reshape_ops.F:      dbcsr_put_block, dbcsr_reserve_blocks
+tas/dbcsr_tas_reshape_ops.F:      dbcsr_tas_iterator_stop, dbcsr_tas_put_block, dbcsr_tas_reserve_blocks, &
+tas/dbcsr_tas_reshape_ops.F:      CALL dbcsr_tas_reserve_blocks(matrix_out, blks_to_allocate(:, 1), blks_to_allocate(:, 2))
+tas/dbcsr_tas_reshape_ops.F:      CALL dbcsr_reserve_blocks(matrix_out%matrix, blks_to_allocate(:, 1), blks_to_allocate(:, 2))
+tas/dbcsr_tas_reshape_ops.F:      CALL dbcsr_reserve_blocks(matrix_out, blks_to_allocate_u(:, 1), blks_to_allocate_u(:, 2))
+tas/dbcsr_tas_base.F:      dbcsr_get_block_p, dbcsr_put_block, dbcsr_reserve_blocks
+tas/dbcsr_tas_base.F:      dbcsr_tas_reserve_blocks, &
+tas/dbcsr_tas_base.F:   INTERFACE dbcsr_tas_reserve_blocks
+tas/dbcsr_tas_base.F:      MODULE PROCEDURE dbcsr_tas_reserve_blocks_template
+tas/dbcsr_tas_base.F:      MODULE PROCEDURE dbcsr_tas_reserve_blocks_index
+tas/dbcsr_tas_base.F:      CALL dbcsr_tas_reserve_blocks(matrix_a, matrix_b)
+tas/dbcsr_tas_base.F:   SUBROUTINE dbcsr_tas_reserve_blocks_template(matrix_in, matrix_out)
+tas/dbcsr_tas_base.F:      CALL dbcsr_tas_reserve_blocks(matrix_out, row_res, col_res)
+tas/dbcsr_tas_base.F:      CALL dbcsr_reserve_blocks(matrix_dbcsr, nz_rows, nz_cols)
+tas/dbcsr_tas_base.F:   SUBROUTINE dbcsr_tas_reserve_blocks_index(matrix, rows, columns)
+tas/dbcsr_tas_base.F:      !! As dbcsr_reserve_blocks
+tas/dbcsr_tas_base.F:      CHARACTER(LEN=*), PARAMETER :: routineN = 'dbcsr_tas_reserve_blocks_index', &
+tas/dbcsr_tas_base.F:      CALL dbcsr_reserve_blocks(matrix%matrix, rowcols_group_u(:, 1), rowcols_group_u(:, 2))
+tas/dbcsr_tas_mm.F:      dbcsr_tas_get_nze_total, dbcsr_tas_reserve_blocks, dbcsr_tas_iterator_start, dbcsr_tas_iterator_next_block, &
+tas/dbcsr_tas_mm.F:         CALL dbcsr_tas_reserve_blocks(matrix_in, matrix_out)
+tensors/dbcsr_tensor_block.F:      dbcsr_reserve_blocks, dbcsr_scalar_type, dbcsr_finalize, dbcsr_get_num_blocks, &
+tensors/dbcsr_tensor_block.F:      dbcsr_tas_iterator_stop, dbcsr_tas_get_block_p, dbcsr_tas_put_block, dbcsr_tas_reserve_blocks
+tensors/dbcsr_tensor_block.F:      dbcsr_t_reserve_blocks, &
+tensors/dbcsr_tensor_block.F:   INTERFACE dbcsr_t_reserve_blocks
+tensors/dbcsr_tensor_block.F:      MODULE PROCEDURE dbcsr_t_reserve_blocks_index
+tensors/dbcsr_tensor_block.F:      MODULE PROCEDURE dbcsr_t_reserve_blocks_index_array
+tensors/dbcsr_tensor_block.F:      MODULE PROCEDURE dbcsr_t_reserve_blocks_template
+tensors/dbcsr_tensor_block.F:      MODULE PROCEDURE dbcsr_t_reserve_blocks_tensor_to_matrix
+tensors/dbcsr_tensor_block.F:      MODULE PROCEDURE dbcsr_t_reserve_blocks_matrix_to_tensor
+tensors/dbcsr_tensor_block.F:   SUBROUTINE dbcsr_t_reserve_blocks_index_array(tensor, blk_ind)
+tensors/dbcsr_tensor_block.F:      CHARACTER(LEN=*), PARAMETER :: routineN = 'dbcsr_t_reserve_blocks_index_array', &
+tensors/dbcsr_tensor_block.F:         CALL dbcsr_t_reserve_blocks(tensor, ${arrlist("blk_ind", nmax=ndim, ndim_pre=1)}$)
+tensors/dbcsr_tensor_block.F:   SUBROUTINE dbcsr_t_reserve_blocks_index(tensor, ${varlist("blk_ind")}$)
+tensors/dbcsr_tensor_block.F:      CHARACTER(LEN=*), PARAMETER :: routineN = 'dbcsr_t_reserve_blocks_index', &
+tensors/dbcsr_tensor_block.F:      CALL dbcsr_tas_reserve_blocks(tensor%matrix_rep, rows=rows, columns=cols)
+tensors/dbcsr_tensor_block.F:   SUBROUTINE dbcsr_t_reserve_blocks_template(tensor_in, tensor_out)
+tensors/dbcsr_tensor_block.F:      CHARACTER(LEN=*), PARAMETER :: routineN = 'dbcsr_t_reserve_blocks_template', &
+tensors/dbcsr_tensor_block.F:      CALL dbcsr_t_reserve_blocks(tensor_out, blk_ind)
+tensors/dbcsr_tensor_block.F:   SUBROUTINE dbcsr_t_reserve_blocks_matrix_to_tensor(matrix_in, tensor_out)
+tensors/dbcsr_tensor_block.F:      CHARACTER(LEN=*), PARAMETER :: routineN = 'dbcsr_t_reserve_blocks_matrix_to_tensor', &
+tensors/dbcsr_tensor_block.F:      CALL dbcsr_t_reserve_blocks(tensor_out, blk_ind_1, blk_ind_2)
+tensors/dbcsr_tensor_block.F:   SUBROUTINE dbcsr_t_reserve_blocks_tensor_to_matrix(tensor_in, matrix_out)
+tensors/dbcsr_tensor_block.F:      CHARACTER(LEN=*), PARAMETER :: routineN = 'dbcsr_t_reserve_blocks_tensor_to_matrix', &
+tensors/dbcsr_tensor_block.F:      CALL dbcsr_reserve_blocks(matrix_out, blk_ind_1(:iblk), blk_ind_2(:iblk))
+tensors/dbcsr_tensor.h:     void c_dbcsr_t_reserve_blocks_index(const void* c_tensor, const int nblocks, ${varlist("const int* c_blk_ind")}$);
+tensors/dbcsr_tensor.h:     void c_dbcsr_t_reserve_blocks_template(const void* c_tensor_in, const void* tensor_out);
+tensors/dbcsr_tensor_reshape.F:      dbcsr_t_reserve_blocks, dbcsr_t_put_block
+tensors/dbcsr_tensor_reshape.F:      CALL dbcsr_t_reserve_blocks(tensor_out, blks_to_allocate)
+tensors/dbcsr_tensor_api.F:      dbcsr_t_reserve_blocks, dbcsr_t_copy_matrix_to_tensor, dbcsr_t_copy, &
+tensors/dbcsr_tensor_api.F:   PUBLIC :: dbcsr_t_reserve_blocks
+tensors/dbcsr_tensor.F:      ndims_iterator, dbcsr_t_reserve_blocks, block_nd, destroy_block
+tensors/dbcsr_tensor.F:      dbcsr_t_reserve_blocks, &
+tensors/dbcsr_tensor.F:      CALL dbcsr_t_reserve_blocks(tensor_in, tensor_out)
+tensors/dbcsr_tensor.F:      CALL dbcsr_t_reserve_blocks(matrix_in_desym, tensor_out)
+tensors/dbcsr_tensor.F:      CALL dbcsr_t_reserve_blocks(tensor_in, matrix_out)
+tensors/dbcsr_tensor_test.F:      dbcsr_t_reserve_blocks, dbcsr_t_get_stored_coordinates, dbcsr_t_put_block, &
+tensors/dbcsr_tensor_test.F:      CALL dbcsr_t_reserve_blocks(tensor1, tensor2_tmp)
+tensors/dbcsr_tensor_test.F:         CALL dbcsr_t_reserve_blocks(tensor, ${varlist("my_blk_ind", nmax=ndim)}$)
+tensors/.goutputstream-OREXH0:   SUBROUTINE c_dbcsr_t_reserve_blocks_index(c_tensor, nblocks, ${varlist("c_blk_ind")}$) &
+tensors/.goutputstream-OREXH0:      BIND(C, name="c_dbcsr_t_reserve_blocks_index")
+tensors/.goutputstream-OREXH0:      CALL dbcsr_t_reserve_blocks(tensor, ${varlist("blk_ind")}$)
+tensors/.goutputstream-OREXH0:   SUBROUTINE c_dbcsr_t_reserve_blocks_template(c_tensor_in, c_tensor_out) &
+tensors/.goutputstream-OREXH0:      BIND(C, name="c_dbcsr_t_reserve_blocks_template")
+tensors/.goutputstream-OREXH0:      CALL dbcsr_t_reserve_blocks(tensor_in, tensor_out)
+tensors/dbcsr_tensor_api_c.F:   SUBROUTINE c_dbcsr_t_reserve_blocks_index(c_tensor, nblocks, ${varlist("c_blk_ind")}$) &
+tensors/dbcsr_tensor_api_c.F:      BIND(C, name="c_dbcsr_t_reserve_blocks_index")
+tensors/dbcsr_tensor_api_c.F:      CALL dbcsr_t_reserve_blocks(tensor, ${varlist("blk_ind")}$)
+tensors/dbcsr_tensor_api_c.F:   SUBROUTINE c_dbcsr_t_reserve_blocks_template(c_tensor_in, c_tensor_out) &
+tensors/dbcsr_tensor_api_c.F:      BIND(C, name="c_dbcsr_t_reserve_blocks_template")
+tensors/dbcsr_tensor_api_c.F:      CALL dbcsr_t_reserve_blocks(tensor_in, tensor_out)
+tensors/dbcsr_tensor_split.F:                                 dbcsr_t_reserve_blocks, &
+tensors/dbcsr_tensor_split.F:      CALL dbcsr_t_reserve_blocks(tensor_out, blks_to_allocate)
+tensors/dbcsr_tensor_split.F:      CALL dbcsr_t_reserve_blocks(tensor_out, blks_to_allocate)
+tensors/dbcsr_tensor_split.F:      CALL dbcsr_t_reserve_blocks(tensor_out, blk_ind)

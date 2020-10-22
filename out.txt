@@ -1,0 +1,30 @@
+Binary file build/src/libdbcsr.a matches
+Binary file build/src/CMakeFiles/dbcsr.dir/tas/dbcsr_tas_mm.F.o matches
+Binary file build/src/CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor.F.o matches
+build/src/tas/dbcsr_tas_mm.F:                  WRITE (unit_nr_prv, "(T2,A,1X,A)") "Redistribution of", TRIM(matrix2_in%matrix%name)
+build/src/tas/dbcsr_tas_mm.F:                  WRITE (unit_nr_prv, "(T2,A,1X,A)") "Redistribution of", TRIM(matrix1_in%matrix%name)
+build/src/tensors/dbcsr_tensor.F:      !! matrix multiplication. This routine reshapes the two largest of the three tensors. Redistribution
+build/src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A)') "Redistribution of", TRIM(tensor1%name)
+build/src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A,1X,A,1X,A)') "Redistribution of", &
+build/src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A)') "Redistribution of", TRIM(tensor2%name)
+build/src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A,1X,A,1X,A)') "Redistribution of", TRIM(tensor1%name), &
+build/src/tensors/dbcsr_tensor.F:         IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A)') "Redistribution of", TRIM(tensor_in%name)
+Binary file build/examples/dbcsr_tensor_example_1_cpp matches
+Binary file build/tests/dbcsr_tas_unittest matches
+Binary file build/tests/dbcsr_tensor_unittest matches
+Binary file build/tests/dbcsr_tensor_test_cpp matches
+Binary file install/usr/local/lib/libdbcsr.a matches
+src/tas/dbcsr_tas_mm.F:                  WRITE (unit_nr_prv, "(T2,A,1X,A)") "Redistribution of", TRIM(matrix2_in%matrix%name)
+src/tas/dbcsr_tas_mm.F:                  WRITE (unit_nr_prv, "(T2,A,1X,A)") "Redistribution of", TRIM(matrix1_in%matrix%name)
+src/tensors/dbcsr_tensor.F:      !! matrix multiplication. This routine reshapes the two largest of the three tensors. Redistribution
+src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A)') "Redistribution of", TRIM(tensor1%name)
+src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A,1X,A,1X,A)') "Redistribution of", &
+src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A)') "Redistribution of", TRIM(tensor2%name)
+src/tensors/dbcsr_tensor.F:            IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A,1X,A,1X,A)') "Redistribution of", TRIM(tensor1%name), &
+src/tensors/dbcsr_tensor.F:         IF (unit_nr_prv > 0) WRITE (unit_nr_prv, '(T2,A,1X,A)') "Redistribution of", TRIM(tensor_in%name)
+tools/build_libsmm/README:! * Redistribution and use in source and binary forms, with or without
+tools/build_libsmm/README:! *     * Redistributions of source code must retain the above copyright
+tools/build_libsmm/README:! *     * Redistributions in binary form must reproduce the above copyright
+tools/build_libsmm/COPYRIGHT:! * Redistribution and use in source and binary forms, with or without
+tools/build_libsmm/COPYRIGHT:! *     * Redistributions of source code must retain the above copyright
+tools/build_libsmm/COPYRIGHT:! *     * Redistributions in binary form must reproduce the above copyright

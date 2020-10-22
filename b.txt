@@ -1,0 +1,127 @@
+! **************************************************************************************************
+!> \brief As dbcsr_get_info but for tensors
+!> \param tensor ...
+!> \param nblks_total number of blocks along each dimension
+!> \param nfull_total number of elements along each dimension
+!> \param nblks_local local number of blocks along each dimension
+!> \param nfull_local local number of elements along each dimension
+!> \param pdims process grid dimensions
+!> \param my_ploc process coordinates in process grid
+!> \param blks_local_1 local blocks along dimension 1
+!> \param blks_local_2 local blocks along dimension 2
+!> \param blks_local_...
+!> \param proc_dist_1 distribution vector along dimension 1
+!> \param proc_dist_2 distribution vector along dimension 2
+!> \param proc_dist_...
+!> \param blk_size_1 block sizes along dimension 1
+!> \param blk_size_2 block sizes along dimension 2
+!> \param blk_size_...
+!> \param blk_offset_1 block offsets along dimension 1
+!> \param blk_offset_2 block offsets along dimension 2
+!> \param blk_offset_...
+!> \param distribution distribution object
+!> \param name name of tensor
+!> \param data_type data type of tensor
+! **************************************************************************************************
+   SUBROUTINE c_dbcsr_t_get_info(c_tensor, tensor_dim, c_nblks_total, &
+                               c_nfull_total, &
+                               c_nblks_local, &
+                               c_nfull_local, &
+                               c_pdims, &
+                               c_my_ploc, &
+                               ${c_varlist_and_size("c_blks_local")}$, &
+                               ${c_varlist_and_size("c_proc_dist")}$, &
+                               ${c_varlist_and_size("c_blk_size")}$, &
+                               ${c_varlist_and_size("c_blk_offset")}$, &
+                               c_distribution, &
+                               c_name, &
+                               c_data_type) &
+   BIND(C, name="c_dbcsr_t_get_info")
+                               
+      TYPE(c_ptr), INTENT(IN), VALUE :: c_tensor
+      INTEGER(kind=c_int), INTENT(IN), VALUE :: tensor_dim
+      INTEGER(kind=c_int), OPTIONAL, DIMENSION(tensor_dim), INTENT(OUT), &
+         TARGET :: c_nblks_total, c_nfull_total, c_nblks_local, c_nfull_local, c_my_ploc, c_pdims                         
+      
+      INTEGER(kind=c_int), INTENT(OUT), OPTIONAL ::  ${varlist("c_blks_local",suffix="_size")}$
+      INTEGER(kind=c_int), INTENT(OUT), OPTIONAL ::  ${varlist("c_proc_dist",suffix="_size")}$
+      INTEGER(kind=c_int), INTENT(OUT), OPTIONAL ::  ${varlist("c_blk_size",suffix="_size")}$
+      INTEGER(kind=c_int), INTENT(OUT), OPTIONAL ::  ${varlist("c_blk_offset",suffix="_size")}$
+                               
+      TYPE(c_ptr), INTENT(OUT), OPTIONAL :: ${varlist("c_blks_local")}$
+      TYPE(c_ptr), INTENT(OUT), OPTIONAL :: ${varlist("c_proc_dist")}$
+      TYPE(c_ptr), INTENT(OUT), OPTIONAL :: ${varlist("c_blk_size")}$
+      TYPE(c_ptr), INTENT(OUT), OPTIONAL :: ${varlist("c_blk_offset")}$   
+      
+      TYPE(c_ptr), INTENT(OUT), OPTIONAL :: c_distribution
+      TYPE(c_ptr), INTENT(OUT), OPTIONAL :: c_name
+      INTEGER(kind=c_int), INTENT(OUT), OPTIONAL :: c_data_type
+                             
+      TYPE(dbcsr_t_type), POINTER :: tensor
+      INTEGER, DIMENSION(:), POINTER :: nblks_total, nfull_total, &
+                                        nblks_local, nfull_local, &
+                                        my_ploc, pdims
+      INTEGER, DIMENSION(:), POINTER :: ${varlist("blks_local")}$
+      INTEGER, DIMENSION(:), POINTER :: ${varlist("proc_dist")}$
+      INTEGER, DIMENSION(:), POINTER :: ${varlist("blk_size")}$
+      INTEGER, DIMENSION(:), POINTER :: ${varlist("blk_offset")}$
+      TYPE(dbcsr_t_distribution_type), POINTER         :: distribution
+      CHARACTER(:, kind=c_char), ALLOCATABLE             :: fname
+      
+      CALL c_f_pointer(c_tensor, tensor)
+
+#:set list = [ 'nblks_total', 'nfull_total', 'nblks_local', 'nfull_local', 'my_ploc', 'pdims']
+#:for var in list
+
+      IF (PRESENT(c_${var}$)) THEN
+         ${var}$ => c_${var}$
+      ELSE
+         ${var}$ => null()
+      ENDIF
+
+#:endfor  
+
+#: for ddim in ddims
+      
+      IF (.NOT. PRESENT(c_blks_local_${ddim}$)) blks_local_${ddim}$ => null()
+      IF (.NOT. PRESENT(c_proc_dist_${ddim}$)) proc_dist_${ddim}$ => null()
+      IF (.NOT. PRESENT(c_blk_size_${ddim}$)) blk_size_${ddim}$ => null()
+      IF (.NOT. PRESENT(c_blk_offset_${ddim}$)) blk_offset_${ddim}$ => null()
+
+#:endfor
+
+      IF (PRESENT(c_name)) CALL c_f_string(c_name, fname)  
+      
+      IF (.NOT. PRESENT(c_distribution)) distribution => null()
+      
+      CALL dbcsr_t_get_info(tensor, nblks_total, &
+                               nfull_total, &
+                               nblks_local, &
+                               nfull_local, &
+                               pdims, &
+                               my_ploc, &
+                               ${varlist("blks_local")}$, &
+                               ${varlist("proc_dist")}$, &
+                               ${varlist("blk_size")}$, &
+                               ${varlist("blk_offset")}$, &
+                               distribution, &
+                               fname, &
+                               c_data_type)
+
+#: for ddim in ddims
+      
+      c_blks_local_${ddim}$ = c_loc(blks_local_${ddim}$)
+      c_proc_dist_${ddim}$ = c_loc(proc_dist_${ddim}$)
+      c_blk_size_${ddim}$ = c_loc(blk_size_${ddim}$)
+      c_blk_offset_${ddim}$ = c_loc(blk_offset_${ddim}$)
+      
+      c_blks_local_${ddim}$_size = SIZE(blks_local_${ddim}$)
+      c_proc_dist_${ddim}$_size = SIZE(proc_dist_${ddim}$)
+      c_blk_size_${ddim}$_size = SIZE(blk_size_${ddim}$)
+      c_blk_offset_${ddim}$_size = SIZE(blk_offset_${ddim}$)
+
+#:endfor     
+
+      c_distribution = c_loc(distribution)   
+
+   END SUBROUTINE

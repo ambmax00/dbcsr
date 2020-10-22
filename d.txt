@@ -1,0 +1,233 @@
+examples/dbcsr_example_3.F:        dbcsr_put_block, dbcsr_release, dbcsr_type, dbcsr_type_no_symmetry, dbcsr_type_real_8
+examples/dbcsr_example_3.F:                     data_type=dbcsr_type_real_8)
+examples/dbcsr_example_3.F:                     data_type=dbcsr_type_real_8)
+examples/dbcsr_example_3.F:                     data_type=dbcsr_type_real_8)
+examples/dbcsr_example_1.F:        dbcsr_type, dbcsr_type_no_symmetry, dbcsr_type_real_8
+examples/dbcsr_example_1.F:                     data_type=dbcsr_type_real_8, &
+examples/dbcsr_example_2.F:        dbcsr_release, dbcsr_type, dbcsr_type_no_symmetry, dbcsr_type_real_8
+examples/dbcsr_example_2.F:                     data_type=dbcsr_type_real_8)
+src/work/dbcsr_work_operations.F:      dbcsr_type_real_8, dbcsr_type_real_default, dbcsr_type_symmetric, dbcsr_work_type
+src/work/dbcsr_work_operations.F:         CASE (dbcsr_type_real_8)
+src/work/dbcsr_work_operations.F:            matrix%data_type = dbcsr_type_real_8
+src/work/dbcsr_work_operations.F:         CASE (dbcsr_type_real_8)
+src/dbcsr_api.F:      dbcsr_type_complex_default, dbcsr_type_no_symmetry, dbcsr_type_real_4, dbcsr_type_real_8, &
+src/dbcsr_api.F:   PUBLIC :: dbcsr_type_real_8
+src/ops/dbcsr_transformations.F:      dbcsr_type_no_symmetry, dbcsr_type_real_4, dbcsr_type_real_8
+src/ops/dbcsr_transformations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_transformations.F:               CASE (dbcsr_type_real_8)
+src/ops/dbcsr_transformations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_transformations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_transformations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_transformations.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_transformations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:      dbcsr_type_real_8, dbcsr_type_symmetric
+src/ops/dbcsr_operations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:      IF (dbcsr_get_data_type(matrix_a) .EQ. dbcsr_type_real_8 .AND. &
+src/ops/dbcsr_operations.F:          dbcsr_get_data_type(matrix_b) .EQ. dbcsr_type_real_8) THEN
+src/ops/dbcsr_operations.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:               CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:                  CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:      CASE (dbcsr_type_real_4, dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:      CALL dbcsr_data_new(norm_vector_a, dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_operations.F:      IF (dbcsr_get_data_type(matrix_a) .EQ. dbcsr_type_real_8) THEN
+src/ops/dbcsr_operations.F:      IF (dbcsr_get_data_type(matrix_a) .EQ. dbcsr_type_real_8 .AND. &
+src/ops/dbcsr_operations.F:          dbcsr_get_data_type(matrix_b) .EQ. dbcsr_type_real_8) THEN
+src/ops/dbcsr_csr_conversions.F:                               dbcsr_type_real_8, &
+src/ops/dbcsr_csr_conversions.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:                  CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:         !! CSR format) Note: matrix must be of data_type dbcsr_type_real_4 or dbcsr_type_real_8 (integer types not supported)
+src/ops/dbcsr_csr_conversions.F:                           data_type=dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:                        data_type=dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:               CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:               CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:                     CASE (dbcsr_type_real_8)
+src/ops/dbcsr_csr_conversions.F:            CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:                          dbcsr_type_real_8
+src/ops/dbcsr_io.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:                     CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:                        CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:      CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:         CASE (dbcsr_type_real_8)
+src/ops/dbcsr_io.F:                        CASE (dbcsr_type_real_8)
+src/ops/dbcsr_test_methods.F:      dbcsr_type_real_8, dbcsr_type_real_default, dbcsr_type_symmetric
+src/ops/dbcsr_test_methods.F:      CASE (dbcsr_type_real_8)
+src/dist/dbcsr_dist_util.F:      dbcsr_type_complex_8, dbcsr_type_real_4, dbcsr_type_real_8
+src/dist/dbcsr_dist_util.F:      CASE (dbcsr_type_real_8)
+src/dist/dbcsr_dist_util.F:                  CASE (dbcsr_type_real_8)
+src/mm/dbcsr_mm_3d.F:      dbcsr_type_real_4, dbcsr_type_real_8
+src/mm/dbcsr_mm_3d.F:      IF (data_type .NE. dbcsr_type_real_8 .AND. &
+src/mm/dbcsr_mm_multrec.F:                          dbcsr_type_real_4, dbcsr_type_real_8
+src/mm/dbcsr_mm_multrec.F:      CASE (dbcsr_type_real_8)
+src/mm/dbcsr_mm_cannon.F:      dbcsr_type_real_4, dbcsr_type_real_8
+src/mm/dbcsr_mm_cannon.F:      IF (data_type .NE. dbcsr_type_real_8 .AND. &
+src/mm/dbcsr_mm_cannon.F:      CASE (dbcsr_type_real_8)
+src/mm/dbcsr_multiply_api.F:                          dbcsr_type_real_8
+src/mm/dbcsr_multiply_api.F:      ELSEIF (dbcsr_get_data_type(matrix_a) .EQ. dbcsr_type_real_8 .AND. &
+src/mm/dbcsr_multiply_api.F:              dbcsr_get_data_type(matrix_b) .EQ. dbcsr_type_real_8 .AND. &
+src/mm/dbcsr_multiply_api.F:              dbcsr_get_data_type(matrix_c) .EQ. dbcsr_type_real_8) THEN
+src/mm/dbcsr_mm_hostdrv.F:                          dbcsr_type_real_8, &
+src/mm/dbcsr_mm_hostdrv.F:         CASE (dbcsr_type_real_8)
+src/mm/dbcsr_mm_hostdrv.F:         CASE (dbcsr_type_real_8)
+src/mm/dbcsr_mm_hostdrv.F:         CASE (dbcsr_type_real_8)
+src/mm/dbcsr_mm_hostdrv.F:         CASE (dbcsr_type_real_8)
+src/mm/dbcsr_mm_hostdrv.F:         CASE (dbcsr_type_real_8)
+src/mm/dbcsr_mm_common.F:      dbcsr_type_real_4, dbcsr_type_real_8
+src/mm/dbcsr_mm_common.F:      CASE (dbcsr_type_real_8)
+src/mm/dbcsr_acc_operations.F:   USE dbcsr_types, ONLY: dbcsr_type_real_8
+src/mm/dbcsr_acc_operations.F:      IF (datatype .EQ. dbcsr_type_real_8 .AND. istat .EQ. -100) THEN
+src/mpi/dbcsr_mp_operations.F:                          dbcsr_type_real_8
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/mpi/dbcsr_mp_operations.F:      CASE (dbcsr_type_real_8)
+src/tensors/dbcsr_tensor_test.F:                                   dbcsr_type_real_8, ${varlist("blk_size", nmax=ndim)}$)
+src/tensors/dbcsr_tensor_test.F:                                   dbcsr_type_real_8, ${varlist("blk_size", nmax=ndim)}$)
+src/tensors/dbcsr_tensor.fypp:#:set dtype_float_param = ['dbcsr_type_real_8', 'dbcsr_type_real_4', 'dbcsr_type_complex_8', 'dbcsr_type_complex_4']
+src/data/dbcsr_data_methods_low.F:      dbcsr_type_real_4_2d, dbcsr_type_real_8, dbcsr_type_real_8_2d
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:         CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:         CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:            CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:            CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:         CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:                         data_type .EQ. dbcsr_type_real_8_2d .OR. &
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:         dbcsr_type_2d_to_1d = dbcsr_type_real_8
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:         dbcsr_type_2d_to_1d = dbcsr_type_real_8
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods_low.F:         dbcsr_type_1d_to_2d = dbcsr_type_real_8_2d
+src/data/dbcsr_data_methods_low.F:      CASE (dbcsr_type_real_8_2d)
+src/data/dbcsr_data_methods_low.F:         dbcsr_type_1d_to_2d = dbcsr_type_real_8_2d
+src/data/dbcsr.fypp:#:set dkind1 = ['dbcsr_type_real_8', 'dbcsr_type_real_4', 'dbcsr_type_complex_8', 'dbcsr_type_complex_4']
+src/data/dbcsr_ptr_util.F:                               dbcsr_type_real_8
+src/data/dbcsr_ptr_util.F:         CASE (dbcsr_type_real_8)
+src/data/dbcsr_ptr_util.F:         CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_types.F:   PUBLIC :: dbcsr_type_real_4, dbcsr_type_real_8, &
+src/data/dbcsr_data_types.F:             dbcsr_type_real_4_2d, dbcsr_type_real_8_2d, &
+src/data/dbcsr_data_types.F:   INTEGER, PARAMETER          :: dbcsr_type_real_8 = 3 !011
+src/data/dbcsr_data_types.F:   INTEGER, PARAMETER          :: dbcsr_type_real_8_2d = 11 !1011
+src/data/dbcsr_data_types.F:   INTEGER, PARAMETER          :: dbcsr_type_real_default = dbcsr_type_real_8
+src/data/dbcsr_data_types.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_operations.F:                          dbcsr_type_real_8
+src/data/dbcsr_data_operations.F:         CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_operations.F:         CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_operations.F:            CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_operations.F:            CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_operations.F:            CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_operations.F:            CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods.F:      dbcsr_type_real_4, dbcsr_type_real_8
+src/data/dbcsr_data_methods.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods.F:      CASE (dbcsr_type_real_8)
+src/data/dbcsr_data_methods.F:         CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_access.F:      dbcsr_type_real_8, dbcsr_type_real_8_2d
+src/block/dbcsr_block_access.F:            CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_access.F:            ELSEIF (data_type_m .EQ. dbcsr_type_real_8) THEN
+src/block/dbcsr_block_access.F:            ELSEIF (data_type_m .EQ. dbcsr_type_real_8) THEN
+src/block/dbcsr_block_access.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_access.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:      dbcsr_type_real_4_2d, dbcsr_type_real_8, dbcsr_type_real_8_2d
+src/block/dbcsr_block_operations.F:         IF (dst%d%data_type .NE. dbcsr_type_real_8 &
+src/block/dbcsr_block_operations.F:             .AND. dst%d%data_type .NE. dbcsr_type_real_8_2d &
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:         IF (dst%d%data_type .NE. dbcsr_type_real_8 &
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:         IF (dst%d%data_type .NE. dbcsr_type_real_8 &
+src/block/dbcsr_block_operations.F:             .AND. dst%d%data_type .NE. dbcsr_type_real_8_2d &
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:         IF (dst%d%data_type .NE. dbcsr_type_real_8 &
+src/block/dbcsr_block_operations.F:             .AND. dst%d%data_type .NE. dbcsr_type_real_8_2d &
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:         IF (dst%d%data_type .NE. dbcsr_type_real_8 &
+src/block/dbcsr_block_operations.F:             .AND. dst%d%data_type .NE. dbcsr_type_real_8_2d &
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8_2d)
+src/block/dbcsr_block_operations.F:      CASE (dbcsr_type_real_8)
+src/dbcsr_api_c.F:                        col_blk_size=col_blk_sizes, data_type=dbcsr_type_real_8)
+src/acc/libsmm_acc/libsmm_acc.cpp:#define dbcsr_type_real_8     3
+src/acc/libsmm_acc/libsmm_acc.cpp:    if(datatype==dbcsr_type_real_8) {
+src/acc/libsmm_acc/libsmm_acc.cpp:    if(datatype != dbcsr_type_real_8)
+src/tas/dbcsr_tas_reshape_ops.F:      dbcsr_data_obj, dbcsr_type_real_8, dbcsr_type_real_4, dbcsr_type_complex_8, dbcsr_type_complex_4
+src/tas/dbcsr_tas.fypp:#:set dtype_float_param = ['dbcsr_type_real_8', 'dbcsr_type_real_4', 'dbcsr_type_complex_8', 'dbcsr_type_complex_4']
+src/tas/dbcsr_tas_test.F:   USE dbcsr_types, ONLY: dbcsr_type_real_8
+src/tas/dbcsr_tas_test.F:      CALL dbcsr_tas_create(matrix, name, dist=dist, data_type=dbcsr_type_real_8, &
+src/tas/dbcsr_tas_test.F:                           data_type=dbcsr_type_real_8)
+src/tas/dbcsr_tas_test.F:                           data_type=dbcsr_type_real_8)
+src/tas/dbcsr_tas_test.F:                           data_type=dbcsr_type_real_8)
+src/tas/dbcsr_tas_test.F:                        data_type=dbcsr_type_real_8)
+src/tas/dbcsr_tas_test.F:                        data_type=dbcsr_type_real_8)
+src/tas/dbcsr_tas_test.F:                        data_type=dbcsr_type_real_8)
+src/tas/dbcsr_tas_test.F:                        data_type=dbcsr_type_real_8)
+src/tas/dbcsr_tas_mm.F:      dbcsr_scalar_type, dbcsr_type_real_8, dbcsr_type_real_4, dbcsr_type_complex_8, dbcsr_type_complex_4
+src/utils/dbcsr_blas_operations.F:                          dbcsr_type_real_8
+src/utils/dbcsr_blas_operations.F:      CASE (dbcsr_type_real_8)
+src/core/dbcsr_methods.F:      dbcsr_type_real_8, dbcsr_type_symmetric, dbcsr_work_type
+src/core/dbcsr_methods.F:      IF (data_type .NE. dbcsr_type_real_8 .AND. &
+src/core/dbcsr_methods.F:          .AND. data_type .NE. dbcsr_type_real_8 &
+src/core/dbcsr_types.F:      dbcsr_type_int_4, dbcsr_type_real_4, dbcsr_type_real_4_2d, dbcsr_type_real_8, &
+src/core/dbcsr_types.F:      dbcsr_type_real_8_2d, dbcsr_type_real_default
+src/core/dbcsr_types.F:   PUBLIC :: dbcsr_type_real_4, dbcsr_type_real_8, &
+src/core/dbcsr_types.F:             dbcsr_type_real_4_2d, dbcsr_type_real_8_2d, &

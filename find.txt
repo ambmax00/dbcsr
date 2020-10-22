@@ -1,0 +1,320 @@
+Binary file build/tests/dbcsr_tensor_unittest matches
+Binary file build/tests/dbcsr_perf matches
+Binary file build/tests/dbcsr_tensor_test_cpp matches
+Binary file build/tests/CMakeFiles/dbcsr_perf.dir/dbcsr_performance_multiply.F.o matches
+Binary file build/tests/CMakeFiles/dbcsr_perf.dir/dbcsr_performance_driver.F.o matches
+build/tests/CMakeFiles/dbcsr_perf.dir/depend.make:tests/CMakeFiles/dbcsr_perf.dir/dbcsr_performance_multiply.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp
+build/tests/CMakeFiles/dbcsr_unittest_common.dir/depend.make:tests/CMakeFiles/dbcsr_unittest_common.dir/dbcsr_test_multiply.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp
+Binary file build/tests/CMakeFiles/dbcsr_unittest_common.dir/dbcsr_test_multiply.F.o matches
+Binary file build/tests/dbcsr_unittest1 matches
+Binary file build/tests/dbcsr_unittest3 matches
+Binary file build/tests/libdbcsr_unittest_common.a matches
+Binary file build/tests/dbcsr_unittest2 matches
+Binary file build/tests/dbcsr_tas_unittest matches
+Binary file build/tests/dbcsr_test_csr_conversions matches
+build/src/dbcsr_api.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply_prv => dbcsr_multiply
+build/src/dbcsr_api.F:   PUBLIC :: dbcsr_multiply
+build/src/dbcsr_api.F:   INTERFACE dbcsr_multiply
+build/src/dbcsr_api.F:      MODULE PROCEDURE dbcsr_multiply_d, dbcsr_multiply_s, dbcsr_multiply_c, dbcsr_multiply_z
+build/src/dbcsr_api.F:   SUBROUTINE dbcsr_multiply_d (transa, transb, &
+build/src/dbcsr_api.F:      CALL dbcsr_multiply_prv(transa, transb, &
+build/src/dbcsr_api.F:   END SUBROUTINE dbcsr_multiply_d
+build/src/dbcsr_api.F:   SUBROUTINE dbcsr_multiply_s (transa, transb, &
+build/src/dbcsr_api.F:      CALL dbcsr_multiply_prv(transa, transb, &
+build/src/dbcsr_api.F:   END SUBROUTINE dbcsr_multiply_s
+build/src/dbcsr_api.F:   SUBROUTINE dbcsr_multiply_z (transa, transb, &
+build/src/dbcsr_api.F:      CALL dbcsr_multiply_prv(transa, transb, &
+build/src/dbcsr_api.F:   END SUBROUTINE dbcsr_multiply_z
+build/src/dbcsr_api.F:   SUBROUTINE dbcsr_multiply_c (transa, transb, &
+build/src/dbcsr_api.F:      CALL dbcsr_multiply_prv(transa, transb, &
+build/src/dbcsr_api.F:   END SUBROUTINE dbcsr_multiply_c
+build/src/ops/dbcsr_tests.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+build/src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+build/src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+build/src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+build/src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+Binary file build/src/libdbcsr.a matches
+build/src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_lib_init, dbcsr_multiply_lib_finalize
+build/src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_print_statistics
+build/src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_clear_mempools
+build/src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_generic
+build/src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_lib_init()
+build/src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_lib_init
+build/src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_lib_finalize()
+build/src/mm/dbcsr_mm.F:      CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_multiply_lib_finalize', &
+build/src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_lib_finalize
+build/src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_print_statistics(group, output_unit)
+build/src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_print_statistics
+build/src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_clear_mempools()
+build/src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_clear_mempools
+build/src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_generic(transa, transb, &
+build/src/mm/dbcsr_mm.F:      CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_multiply_generic', &
+build/src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_generic
+build/src/mm/dbcsr_multiply_api.F:MODULE dbcsr_multiply_api
+build/src/mm/dbcsr_multiply_api.F:   USE dbcsr_mm, ONLY: dbcsr_multiply_generic
+build/src/mm/dbcsr_multiply_api.F:   CHARACTER(len=*), PARAMETER, PRIVATE :: moduleN = 'dbcsr_multiply_api'
+build/src/mm/dbcsr_multiply_api.F:   PUBLIC :: dbcsr_multiply
+build/src/mm/dbcsr_multiply_api.F:   INTERFACE dbcsr_multiply
+build/src/mm/dbcsr_multiply_api.F:      MODULE PROCEDURE dbcsr_multiply_generic
+build/src/mm/dbcsr_multiply_api.F:      MODULE PROCEDURE dbcsr_multiply_s, dbcsr_multiply_d, &
+build/src/mm/dbcsr_multiply_api.F:         dbcsr_multiply_c, dbcsr_multiply_z
+build/src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_s(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:      CALL dbcsr_multiply_generic(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_s
+build/src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_d(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:      CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_multiply_d', &
+build/src/mm/dbcsr_multiply_api.F:         CALL dbcsr_multiply_generic(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:         CALL dbcsr_multiply_generic(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_d
+build/src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_c(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:      CALL dbcsr_multiply_generic(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_c
+build/src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_z(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:      CALL dbcsr_multiply_generic(transa, transb, &
+build/src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_z
+build/src/mm/dbcsr_multiply_api.F:END MODULE dbcsr_multiply_api
+build/src/Makefile:mm/dbcsr_multiply_api.o: mm/dbcsr_multiply_api.F.o
+build/src/Makefile:.PHONY : mm/dbcsr_multiply_api.o
+build/src/Makefile:mm/dbcsr_multiply_api.F.o:
+build/src/Makefile:	cd /home/simea/Documents/Prog/mdbcsr/build && $(MAKE) -f src/CMakeFiles/dbcsr.dir/build.make src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o
+build/src/Makefile:.PHONY : mm/dbcsr_multiply_api.F.o
+build/src/Makefile:mm/dbcsr_multiply_api.i: mm/dbcsr_multiply_api.F.i
+build/src/Makefile:.PHONY : mm/dbcsr_multiply_api.i
+build/src/Makefile:mm/dbcsr_multiply_api.F.i:
+build/src/Makefile:	cd /home/simea/Documents/Prog/mdbcsr/build && $(MAKE) -f src/CMakeFiles/dbcsr.dir/build.make src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.i
+build/src/Makefile:.PHONY : mm/dbcsr_multiply_api.F.i
+build/src/Makefile:mm/dbcsr_multiply_api.s: mm/dbcsr_multiply_api.F.s
+build/src/Makefile:.PHONY : mm/dbcsr_multiply_api.s
+build/src/Makefile:mm/dbcsr_multiply_api.F.s:
+build/src/Makefile:	cd /home/simea/Documents/Prog/mdbcsr/build && $(MAKE) -f src/CMakeFiles/dbcsr.dir/build.make src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.s
+build/src/Makefile:.PHONY : mm/dbcsr_multiply_api.F.s
+build/src/Makefile:	@echo "... mm/dbcsr_multiply_api.o"
+build/src/Makefile:	@echo "... mm/dbcsr_multiply_api.i"
+build/src/Makefile:	@echo "... mm/dbcsr_multiply_api.s"
+build/src/CMakeFiles/fypp_DBCSR_SRCS.dir/build.make:src/CMakeFiles/fypp_DBCSR_SRCS: src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/fypp_DBCSR_SRCS.dir/build.make:src/mm/dbcsr_multiply_api.F: ../src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/fypp_DBCSR_SRCS.dir/build.make:	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/simea/Documents/Prog/mdbcsr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Generating mm/dbcsr_multiply_api.F"
+build/src/CMakeFiles/fypp_DBCSR_SRCS.dir/build.make:	cd /home/simea/Documents/Prog/mdbcsr/build/src && /usr/local/bin/fypp /home/simea/Documents/Prog/mdbcsr/src/mm/dbcsr_multiply_api.F /home/simea/Documents/Prog/mdbcsr/build/src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/fypp_DBCSR_SRCS.dir/build.make:fypp_DBCSR_SRCS: src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/fypp_DBCSR_SRCS.dir/cmake_clean.cmake:  "mm/dbcsr_multiply_api.F"
+Binary file build/src/CMakeFiles/dbcsr_c.dir/dbcsr_api_c.F.o matches
+Binary file build/src/CMakeFiles/dbcsr.dir/ops/dbcsr_tests.F.o matches
+Binary file build/src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o matches
+Binary file build/src/CMakeFiles/dbcsr.dir/mm/dbcsr_mm.F.o matches
+build/src/CMakeFiles/dbcsr.dir/flags.make:# Custom defines: src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o_DEFINES = __SHORT_FILE__="dbcsr_multiply_api.F"
+build/src/CMakeFiles/dbcsr.dir/link.txt:/usr/bin/ar qc libdbcsr.a  CMakeFiles/dbcsr.dir/dbcsr_api.F.o CMakeFiles/dbcsr.dir/acc/cublaswrap/dbcsr_cublas.F.o CMakeFiles/dbcsr.dir/acc/cuda/dbcsr_cuda_profiling.F.o CMakeFiles/dbcsr.dir/acc/dbcsr_acc_device.F.o CMakeFiles/dbcsr.dir/acc/dbcsr_acc_devmem.F.o CMakeFiles/dbcsr.dir/acc/dbcsr_acc_event.F.o CMakeFiles/dbcsr.dir/acc/dbcsr_acc_hostmem.F.o CMakeFiles/dbcsr.dir/acc/dbcsr_acc_init.F.o CMakeFiles/dbcsr.dir/acc/dbcsr_acc_stream.F.o CMakeFiles/dbcsr.dir/acc/hipblaswrap/dbcsr_hipblas.F.o CMakeFiles/dbcsr.dir/base/dbcsr_base_hooks.F.o CMakeFiles/dbcsr.dir/base/dbcsr_kinds.F.o CMakeFiles/dbcsr.dir/base/dbcsr_machine.F.o CMakeFiles/dbcsr.dir/base/dbcsr_machine_internal.F.o CMakeFiles/dbcsr.dir/block/dbcsr_block_access.F.o CMakeFiles/dbcsr.dir/block/dbcsr_block_operations.F.o CMakeFiles/dbcsr.dir/block/dbcsr_index_operations.F.o CMakeFiles/dbcsr.dir/block/dbcsr_iterator_operations.F.o CMakeFiles/dbcsr.dir/core/dbcsr_array_types.F.o CMakeFiles/dbcsr.dir/core/dbcsr_config.F.o CMakeFiles/dbcsr.dir/core/dbcsr_lib.F.o CMakeFiles/dbcsr.dir/core/dbcsr_methods.F.o CMakeFiles/dbcsr.dir/core/dbcsr_types.F.o CMakeFiles/dbcsr.dir/core/dbcsr_dict.F.o CMakeFiles/dbcsr.dir/core/dbcsr_error_handling.F.o CMakeFiles/dbcsr.dir/core/dbcsr_iter_types.F.o CMakeFiles/dbcsr.dir/core/dbcsr_list_callstackentry.F.o CMakeFiles/dbcsr.dir/core/dbcsr_list.F.o CMakeFiles/dbcsr.dir/core/dbcsr_list_routinereport.F.o CMakeFiles/dbcsr.dir/core/dbcsr_list_routinestat.F.o CMakeFiles/dbcsr.dir/core/dbcsr_list_timerenv.F.o CMakeFiles/dbcsr.dir/core/dbcsr_log_handling.F.o CMakeFiles/dbcsr.dir/core/dbcsr_print_messages.F.o CMakeFiles/dbcsr.dir/core/dbcsr_timings_base_type.F.o CMakeFiles/dbcsr.dir/core/dbcsr_timings.F.o CMakeFiles/dbcsr.dir/core/dbcsr_timings_report.F.o CMakeFiles/dbcsr.dir/core/dbcsr_timings_types.F.o CMakeFiles/dbcsr.dir/data/dbcsr_data_operations.F.o CMakeFiles/dbcsr.dir/data/dbcsr_data_methods.F.o CMakeFiles/dbcsr.dir/data/dbcsr_data_methods_low.F.o CMakeFiles/dbcsr.dir/data/dbcsr_data_types.F.o CMakeFiles/dbcsr.dir/data/dbcsr_mem_methods.F.o CMakeFiles/dbcsr.dir/data/dbcsr_ptr_util.F.o CMakeFiles/dbcsr.dir/dist/dbcsr_dist_methods.F.o CMakeFiles/dbcsr.dir/dist/dbcsr_dist_operations.F.o CMakeFiles/dbcsr.dir/dist/dbcsr_dist_util.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_acc_operations.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_3d.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_accdrv.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_cannon.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_common.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_csr.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_dist_operations.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_hostdrv.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_multrec.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_sched.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_mm_types.F.o CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o CMakeFiles/dbcsr.dir/mpi/dbcsr_mp_methods.F.o CMakeFiles/dbcsr.dir/mpi/dbcsr_mp_operations.F.o CMakeFiles/dbcsr.dir/mpi/dbcsr_mpiwrap.F.o CMakeFiles/dbcsr.dir/ops/dbcsr_csr_conversions.F.o CMakeFiles/dbcsr.dir/ops/dbcsr_io.F.o CMakeFiles/dbcsr.dir/ops/dbcsr_operations.F.o CMakeFiles/dbcsr.dir/ops/dbcsr_test_methods.F.o CMakeFiles/dbcsr.dir/ops/dbcsr_tests.F.o CMakeFiles/dbcsr.dir/ops/dbcsr_transformations.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_base.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_global.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_io.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_mm.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_reshape_ops.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_split.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_test.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_types.F.o CMakeFiles/dbcsr.dir/tas/dbcsr_tas_util.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_allocate_wrap.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_array_list_methods.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_api.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_block.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_index.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_io.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_reshape.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_split.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_test.F.o CMakeFiles/dbcsr.dir/tensors/dbcsr_tensor_types.F.o CMakeFiles/dbcsr.dir/utils/dbcsr_array_sort.F.o CMakeFiles/dbcsr.dir/utils/dbcsr_blas_operations.F.o CMakeFiles/dbcsr.dir/utils/dbcsr_btree.F.o CMakeFiles/dbcsr.dir/utils/dbcsr_files.F.o CMakeFiles/dbcsr.dir/utils/dbcsr_min_heap.F.o CMakeFiles/dbcsr.dir/utils/dbcsr_string_utilities.F.o CMakeFiles/dbcsr.dir/utils/dbcsr_toollib.F.o CMakeFiles/dbcsr.dir/work/dbcsr_work_operations.F.o
+build/src/CMakeFiles/dbcsr.dir/fortran.internal: dbcsr_multiply_api.mod
+build/src/CMakeFiles/dbcsr.dir/build.make:src/mm/dbcsr_multiply_api.F: ../src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/dbcsr.dir/build.make:	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/simea/Documents/Prog/mdbcsr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Generating mm/dbcsr_multiply_api.F"
+build/src/CMakeFiles/dbcsr.dir/build.make:	cd /home/simea/Documents/Prog/mdbcsr/build/src && /usr/local/bin/fypp /home/simea/Documents/Prog/mdbcsr/src/mm/dbcsr_multiply_api.F /home/simea/Documents/Prog/mdbcsr/build/src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/dbcsr.dir/build.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/CMakeFiles/dbcsr.dir/flags.make
+build/src/CMakeFiles/dbcsr.dir/build.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/dbcsr.dir/build.make:	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/simea/Documents/Prog/mdbcsr/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_155) "Building Fortran object src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o"
+build/src/CMakeFiles/dbcsr.dir/build.make:	cd /home/simea/Documents/Prog/mdbcsr/build/src && /usr/bin/gfortran $(Fortran_DEFINES) -D__SHORT_FILE__=\"dbcsr_multiply_api.F\" $(Fortran_INCLUDES) $(Fortran_FLAGS) -c /home/simea/Documents/Prog/mdbcsr/build/src/mm/dbcsr_multiply_api.F -o CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o
+build/src/CMakeFiles/dbcsr.dir/build.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.i: cmake_force
+build/src/CMakeFiles/dbcsr.dir/build.make:	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing Fortran source to CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.i"
+build/src/CMakeFiles/dbcsr.dir/build.make:	cd /home/simea/Documents/Prog/mdbcsr/build/src && /usr/bin/gfortran $(Fortran_DEFINES) -D__SHORT_FILE__=\"dbcsr_multiply_api.F\" $(Fortran_INCLUDES) $(Fortran_FLAGS) -E /home/simea/Documents/Prog/mdbcsr/build/src/mm/dbcsr_multiply_api.F > CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.i
+build/src/CMakeFiles/dbcsr.dir/build.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.s: cmake_force
+build/src/CMakeFiles/dbcsr.dir/build.make:	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling Fortran source to assembly CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.s"
+build/src/CMakeFiles/dbcsr.dir/build.make:	cd /home/simea/Documents/Prog/mdbcsr/build/src && /usr/bin/gfortran $(Fortran_DEFINES) -D__SHORT_FILE__=\"dbcsr_multiply_api.F\" $(Fortran_INCLUDES) $(Fortran_FLAGS) -S /home/simea/Documents/Prog/mdbcsr/build/src/mm/dbcsr_multiply_api.F -o CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.s
+build/src/CMakeFiles/dbcsr.dir/build.make:"CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o" \
+build/src/CMakeFiles/dbcsr.dir/build.make:src/libdbcsr.a: src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o
+build/src/CMakeFiles/dbcsr.dir/build.make:src/CMakeFiles/dbcsr.dir/depend: src/mm/dbcsr_multiply_api.F
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/dbcsr_api.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: ../src/base/dbcsr_base_uses.f90
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_base_hooks.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_data_methods.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_kinds.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_methods.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_mm.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_types.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o.provides.build: src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp: src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o
+build/src/CMakeFiles/dbcsr.dir/depend.make:	$(CMAKE_COMMAND) -E cmake_copy_f90_mod src/dbcsr_multiply_api.mod src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp GNU
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o.provides.build:
+build/src/CMakeFiles/dbcsr.dir/depend.make:	$(CMAKE_COMMAND) -E touch src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o.provides.build
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/build: src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o.provides.build
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/ops/dbcsr_tests.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/tas/dbcsr_tas_mm.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/depend.make:src/CMakeFiles/dbcsr.dir/tas/dbcsr_tas_test.F.o: src/CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp
+build/src/CMakeFiles/dbcsr.dir/cmake_clean_Fortran.cmake:  "dbcsr_multiply_api.mod"
+build/src/CMakeFiles/dbcsr.dir/cmake_clean_Fortran.cmake:  "CMakeFiles/dbcsr.dir/dbcsr_multiply_api.mod.stamp"
+Binary file build/src/CMakeFiles/dbcsr.dir/tas/dbcsr_tas_test.F.o matches
+Binary file build/src/CMakeFiles/dbcsr.dir/tas/dbcsr_tas_mm.F.o matches
+build/src/CMakeFiles/dbcsr.dir/depend.internal:src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o
+build/src/CMakeFiles/dbcsr.dir/depend.internal: /home/simea/Documents/Prog/mdbcsr/build/src/mm/dbcsr_multiply_api.F
+Binary file build/src/CMakeFiles/dbcsr.dir/core/dbcsr_lib.F.o matches
+build/src/CMakeFiles/dbcsr.dir/DependInfo.cmake:  "/home/simea/Documents/Prog/mdbcsr/build/src/mm/dbcsr_multiply_api.F" "/home/simea/Documents/Prog/mdbcsr/build/src/CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o"
+Binary file build/src/CMakeFiles/dbcsr.dir/dbcsr_api.F.o matches
+build/src/CMakeFiles/dbcsr.dir/cmake_clean.cmake:  "mm/dbcsr_multiply_api.F"
+build/src/CMakeFiles/dbcsr.dir/cmake_clean.cmake:  "CMakeFiles/dbcsr.dir/mm/dbcsr_multiply_api.F.o"
+build/src/dbcsr_api_c.F:   !PUBLIC :: dbcsr_multiply
+build/src/dbcsr_api_c.F:   SUBROUTINE c_dbcsr_multiply_d (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:      BIND(C,name="c_dbcsr_multiply_d")
+build/src/dbcsr_api_c.F:           CALL dbcsr_multiply (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:          CALL dbcsr_multiply (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:   SUBROUTINE c_dbcsr_multiply_s (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:      BIND(C,name="c_dbcsr_multiply_s")
+build/src/dbcsr_api_c.F:           CALL dbcsr_multiply (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:          CALL dbcsr_multiply (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:   SUBROUTINE c_dbcsr_multiply_z (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:      BIND(C,name="c_dbcsr_multiply_z")
+build/src/dbcsr_api_c.F:           CALL dbcsr_multiply (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:          CALL dbcsr_multiply (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:   SUBROUTINE c_dbcsr_multiply_c (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:      BIND(C,name="c_dbcsr_multiply_c")
+build/src/dbcsr_api_c.F:           CALL dbcsr_multiply (c_transa, c_transb, &
+build/src/dbcsr_api_c.F:          CALL dbcsr_multiply (c_transa, c_transb, &
+Binary file build/src/libdbcsr_c.a matches
+build/src/tas/dbcsr_tas_test.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+build/src/tas/dbcsr_tas_test.F:         CALL dbcsr_multiply(transa, transb, dbcsr_scalar(1.0_real_8), dbcsr_a_mm, dbcsr_b_mm, &
+build/src/tas/dbcsr_tas_test.F:         CALL dbcsr_multiply(transa_prv, transb_prv, dbcsr_scalar(1.0_real_8), &
+build/src/tas/dbcsr_tas_test.F:         CALL dbcsr_multiply(transb_prv, transa_prv, dbcsr_scalar(1.0_real_8), &
+build/src/tas/dbcsr_tas_mm.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+build/src/tas/dbcsr_tas_mm.F:      !! arguments of dbcsr_multiply (see dbcsr_mm, dbcsr_multiply_generic).
+build/src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_no_transpose, transb=dbcsr_no_transpose, alpha=alpha, &
+build/src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_transpose, transb=dbcsr_no_transpose, alpha=alpha, &
+build/src/tas/dbcsr_tas_mm.F:         CALL dbcsr_multiply(transa=transa_prv, transb=transb_prv, alpha=alpha, matrix_a=matrix_a_mm, &
+build/src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_no_transpose, transb=dbcsr_no_transpose, alpha=alpha, &
+build/src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_no_transpose, transb=dbcsr_transpose, alpha=alpha, &
+build/src/core/dbcsr_lib.F:   USE dbcsr_mm, ONLY: dbcsr_multiply_clear_mempools, &
+build/src/core/dbcsr_lib.F:                       dbcsr_multiply_lib_finalize, &
+build/src/core/dbcsr_lib.F:                       dbcsr_multiply_lib_init, &
+build/src/core/dbcsr_lib.F:                       dbcsr_multiply_print_statistics
+build/src/core/dbcsr_lib.F:      CALL dbcsr_multiply_lib_init()
+build/src/core/dbcsr_lib.F:      CALL dbcsr_multiply_lib_finalize()
+build/src/core/dbcsr_lib.F:      call dbcsr_multiply_print_statistics(default_group, ext_io_unit)
+build/src/core/dbcsr_lib.F:      CALL dbcsr_multiply_clear_mempools()
+build/src/dbcsr.h:    void c_dbcsr_multiply_d (char c_transa, char c_transb,
+build/src/dbcsr.h:    void c_dbcsr_multiply_s (char c_transa, char c_transb,
+build/src/dbcsr.h:    void c_dbcsr_multiply_z (char c_transa, char c_transb,
+build/src/dbcsr.h:    void c_dbcsr_multiply_c (char c_transa, char c_transb,
+build/CMakeFiles/CMakeRuleHashes.txt:f0261394a05b391a68023a757cc0cddf src/mm/dbcsr_multiply_api.F
+Binary file build/examples/dbcsr_example_3_cpp matches
+Binary file build/examples/dbcsr_tensor_example_1_cpp matches
+Binary file build/examples/CMakeFiles/dbcsr_example_3_cpp.dir/dbcsr_example_3.cpp.o matches
+Binary file build/examples/CMakeFiles/dbcsr_example_3.dir/dbcsr_example_3.F.o matches
+Binary file build/examples/dbcsr_example_1 matches
+Binary file build/examples/dbcsr_example_3 matches
+Binary file build/examples/dbcsr_example_2 matches
+d.txt:src/mm/dbcsr_multiply_api.F:                          dbcsr_type_real_8
+d.txt:src/mm/dbcsr_multiply_api.F:      ELSEIF (dbcsr_get_data_type(matrix_a) .EQ. dbcsr_type_real_8 .AND. &
+d.txt:src/mm/dbcsr_multiply_api.F:              dbcsr_get_data_type(matrix_b) .EQ. dbcsr_type_real_8 .AND. &
+d.txt:src/mm/dbcsr_multiply_api.F:              dbcsr_get_data_type(matrix_c) .EQ. dbcsr_type_real_8) THEN
+examples/dbcsr_example_3.F:      dbcsr_init_lib, dbcsr_multiply, dbcsr_nblkcols_total, dbcsr_nblkrows_total, dbcsr_print, &
+examples/dbcsr_example_3.F:   CALL dbcsr_multiply('N', 'N', 1.0D0, matrix_a, matrix_b, 0.0D0, matrix_c)
+examples/dbcsr_example_3.cpp:    c_dbcsr_multiply_d('N', 'N', 1.0, &matrix_a, &matrix_b, 0.0, &matrix_c, nullptr);
+install/usr/local/include/dbcsr.h:    void c_dbcsr_multiply_d(char transa, char transb, double alpha, void** c_matrix_a, void** c_matrix_b,
+Binary file install/usr/local/lib/libdbcsr.a matches
+Binary file install/usr/local/lib/libdbcsr_c.a matches
+obj/all.dep:$(LIBDIR)/libdbcsr.a : dbcsr_mm_3d.o dbcsr_mm_multrec.o dbcsr_mm_cannon.o dbcsr_mm.o dbcsr_mm_sched.o dbcsr_mm_types.o dbcsr_mm_csr.o dbcsr_mm_accdrv.o dbcsr_multiply_api.o dbcsr_mm_dist_operations.o dbcsr_mm_hostdrv.o dbcsr_mm_common.o dbcsr_acc_operations.o
+obj/all.dep:dbcsr_api.mod : dbcsr_api.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 /home/simea/Documents/Prog/mdbcsr/src/data/dbcsr.fypp dbcsr_array_types.mod dbcsr_types.mod dbcsr_multiply_api.mod dbcsr_block_access.mod dbcsr_mp_methods.mod dbcsr_csr_conversions.mod dbcsr_kinds.mod dbcsr_dist_util.mod dbcsr_lib.mod dbcsr_string_utilities.mod dbcsr_methods.mod dbcsr_tests.mod dbcsr_config.mod dbcsr_test_methods.mod dbcsr_dist_methods.mod dbcsr_work_operations.mod dbcsr_io.mod dbcsr_data_methods.mod dbcsr_mpiwrap.mod dbcsr_dist_operations.mod dbcsr_operations.mod dbcsr_transformations.mod dbcsr_iterator_operations.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_api.o : dbcsr_api.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 /home/simea/Documents/Prog/mdbcsr/src/data/dbcsr.fypp dbcsr_array_types.mod dbcsr_types.mod dbcsr_multiply_api.mod dbcsr_block_access.mod dbcsr_mp_methods.mod dbcsr_csr_conversions.mod dbcsr_kinds.mod dbcsr_dist_util.mod dbcsr_lib.mod dbcsr_string_utilities.mod dbcsr_methods.mod dbcsr_tests.mod dbcsr_config.mod dbcsr_test_methods.mod dbcsr_dist_methods.mod dbcsr_work_operations.mod dbcsr_io.mod dbcsr_data_methods.mod dbcsr_mpiwrap.mod dbcsr_dist_operations.mod dbcsr_operations.mod dbcsr_transformations.mod dbcsr_iterator_operations.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_tests.mod : dbcsr_tests.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 dbcsr_types.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_dist_util.mod dbcsr_test_methods.mod dbcsr_mpiwrap.mod dbcsr_dist_operations.mod dbcsr_dist_methods.mod dbcsr_multiply_api.mod dbcsr_mp_methods.mod dbcsr_operations.mod dbcsr_work_operations.mod dbcsr_transformations.mod dbcsr_io.mod dbcsr_methods.mod dbcsr_machine.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_tests.o : dbcsr_tests.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 dbcsr_types.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_dist_util.mod dbcsr_test_methods.mod dbcsr_mpiwrap.mod dbcsr_dist_operations.mod dbcsr_dist_methods.mod dbcsr_multiply_api.mod dbcsr_mp_methods.mod dbcsr_operations.mod dbcsr_work_operations.mod dbcsr_transformations.mod dbcsr_io.mod dbcsr_methods.mod dbcsr_machine.mod dbcsr_base_hooks.mod
+obj/all.dep:# Object dbcsr_multiply_api.F
+obj/all.dep:dbcsr_multiply_api.mod : dbcsr_multiply_api.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 dbcsr_types.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_mm.mod dbcsr_methods.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_multiply_api.o : dbcsr_multiply_api.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 dbcsr_types.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_mm.mod dbcsr_methods.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_tas_test.mod : dbcsr_tas_test.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 dbcsr_types.mod dbcsr_tas_types.mod dbcsr_tas_mm.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_tas_split.mod dbcsr_dist_util.mod dbcsr_tas_util.mod dbcsr_dist_methods.mod dbcsr_multiply_api.mod dbcsr_operations.mod dbcsr_work_operations.mod dbcsr_tas_base.mod dbcsr_transformations.mod dbcsr_tas_global.mod dbcsr_methods.mod dbcsr_mpiwrap.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_tas_test.o : dbcsr_tas_test.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 dbcsr_types.mod dbcsr_tas_types.mod dbcsr_tas_mm.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_tas_split.mod dbcsr_dist_util.mod dbcsr_tas_util.mod dbcsr_dist_methods.mod dbcsr_multiply_api.mod dbcsr_operations.mod dbcsr_work_operations.mod dbcsr_tas_base.mod dbcsr_transformations.mod dbcsr_tas_global.mod dbcsr_methods.mod dbcsr_mpiwrap.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_tas_mm.mod : dbcsr_tas_mm.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 /home/simea/Documents/Prog/mdbcsr/src/tas/dbcsr_tas.fypp dbcsr_types.mod dbcsr_tas_types.mod dbcsr_data_types.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_tas_split.mod dbcsr_tas_reshape_ops.mod dbcsr_dist_methods.mod dbcsr_multiply_api.mod dbcsr_tas_util.mod dbcsr_operations.mod dbcsr_tas_io.mod dbcsr_work_operations.mod dbcsr_tas_base.mod dbcsr_transformations.mod dbcsr_tas_global.mod dbcsr_methods.mod dbcsr_mpiwrap.mod dbcsr_base_hooks.mod
+obj/all.dep:dbcsr_tas_mm.o : dbcsr_tas_mm.F /home/simea/Documents/Prog/mdbcsr/src/base/dbcsr_base_uses.f90 /home/simea/Documents/Prog/mdbcsr/src/tas/dbcsr_tas.fypp dbcsr_types.mod dbcsr_tas_types.mod dbcsr_data_types.mod dbcsr_kinds.mod dbcsr_data_methods.mod dbcsr_tas_split.mod dbcsr_tas_reshape_ops.mod dbcsr_dist_methods.mod dbcsr_multiply_api.mod dbcsr_tas_util.mod dbcsr_operations.mod dbcsr_tas_io.mod dbcsr_work_operations.mod dbcsr_tas_base.mod dbcsr_transformations.mod dbcsr_tas_global.mod dbcsr_methods.mod dbcsr_mpiwrap.mod dbcsr_base_hooks.mod
+src/dbcsr_api.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply_prv => dbcsr_multiply
+src/dbcsr_api.F:   PUBLIC :: dbcsr_multiply
+src/dbcsr_api.F:   INTERFACE dbcsr_multiply
+src/dbcsr_api.F:      MODULE PROCEDURE dbcsr_multiply_d, dbcsr_multiply_s, dbcsr_multiply_c, dbcsr_multiply_z
+src/dbcsr_api.F:   SUBROUTINE dbcsr_multiply_${nametype1}$ (transa, transb, &
+src/dbcsr_api.F:      CALL dbcsr_multiply_prv(transa, transb, &
+src/dbcsr_api.F:   END SUBROUTINE dbcsr_multiply_${nametype1}$
+src/ops/dbcsr_tests.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+src/ops/dbcsr_tests.F:                     CALL dbcsr_multiply(transa, transb, alpha, &
+src/CMakeLists.txt:  mm/dbcsr_multiply_api.F
+src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_lib_init, dbcsr_multiply_lib_finalize
+src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_print_statistics
+src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_clear_mempools
+src/mm/dbcsr_mm.F:   PUBLIC :: dbcsr_multiply_generic
+src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_lib_init()
+src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_lib_init
+src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_lib_finalize()
+src/mm/dbcsr_mm.F:      CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_multiply_lib_finalize', &
+src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_lib_finalize
+src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_print_statistics(group, output_unit)
+src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_print_statistics
+src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_clear_mempools()
+src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_clear_mempools
+src/mm/dbcsr_mm.F:   SUBROUTINE dbcsr_multiply_generic(transa, transb, &
+src/mm/dbcsr_mm.F:      CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_multiply_generic', &
+src/mm/dbcsr_mm.F:   END SUBROUTINE dbcsr_multiply_generic
+src/mm/dbcsr_multiply_api.F:MODULE dbcsr_multiply_api
+src/mm/dbcsr_multiply_api.F:   USE dbcsr_mm, ONLY: dbcsr_multiply_generic
+src/mm/dbcsr_multiply_api.F:   CHARACTER(len=*), PARAMETER, PRIVATE :: moduleN = 'dbcsr_multiply_api'
+src/mm/dbcsr_multiply_api.F:   PUBLIC :: dbcsr_multiply
+src/mm/dbcsr_multiply_api.F:   INTERFACE dbcsr_multiply
+src/mm/dbcsr_multiply_api.F:      MODULE PROCEDURE dbcsr_multiply_generic
+src/mm/dbcsr_multiply_api.F:      MODULE PROCEDURE dbcsr_multiply_s, dbcsr_multiply_d, &
+src/mm/dbcsr_multiply_api.F:         dbcsr_multiply_c, dbcsr_multiply_z
+src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_s(transa, transb, &
+src/mm/dbcsr_multiply_api.F:      CALL dbcsr_multiply_generic(transa, transb, &
+src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_s
+src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_d(transa, transb, &
+src/mm/dbcsr_multiply_api.F:      CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_multiply_d', &
+src/mm/dbcsr_multiply_api.F:         CALL dbcsr_multiply_generic(transa, transb, &
+src/mm/dbcsr_multiply_api.F:         CALL dbcsr_multiply_generic(transa, transb, &
+src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_d
+src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_c(transa, transb, &
+src/mm/dbcsr_multiply_api.F:      CALL dbcsr_multiply_generic(transa, transb, &
+src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_c
+src/mm/dbcsr_multiply_api.F:   SUBROUTINE dbcsr_multiply_z(transa, transb, &
+src/mm/dbcsr_multiply_api.F:      CALL dbcsr_multiply_generic(transa, transb, &
+src/mm/dbcsr_multiply_api.F:   END SUBROUTINE dbcsr_multiply_z
+src/mm/dbcsr_multiply_api.F:END MODULE dbcsr_multiply_api
+src/dbcsr_api_c.F:   !PUBLIC :: dbcsr_multiply
+src/dbcsr_api_c.F:   SUBROUTINE c_dbcsr_multiply_${nametype}$ (c_transa, c_transb, &
+src/dbcsr_api_c.F:      BIND(C,name="c_dbcsr_multiply_${nametype}$")
+src/dbcsr_api_c.F:           CALL dbcsr_multiply (c_transa, c_transb, &
+src/dbcsr_api_c.F:          CALL dbcsr_multiply (c_transa, c_transb, &
+src/tas/dbcsr_tas_test.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+src/tas/dbcsr_tas_test.F:         CALL dbcsr_multiply(transa, transb, dbcsr_scalar(1.0_real_8), dbcsr_a_mm, dbcsr_b_mm, &
+src/tas/dbcsr_tas_test.F:         CALL dbcsr_multiply(transa_prv, transb_prv, dbcsr_scalar(1.0_real_8), &
+src/tas/dbcsr_tas_test.F:         CALL dbcsr_multiply(transb_prv, transa_prv, dbcsr_scalar(1.0_real_8), &
+src/tas/dbcsr_tas_mm.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+src/tas/dbcsr_tas_mm.F:      !! arguments of dbcsr_multiply (see dbcsr_mm, dbcsr_multiply_generic).
+src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_no_transpose, transb=dbcsr_no_transpose, alpha=alpha, &
+src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_transpose, transb=dbcsr_no_transpose, alpha=alpha, &
+src/tas/dbcsr_tas_mm.F:         CALL dbcsr_multiply(transa=transa_prv, transb=transb_prv, alpha=alpha, matrix_a=matrix_a_mm, &
+src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_no_transpose, transb=dbcsr_no_transpose, alpha=alpha, &
+src/tas/dbcsr_tas_mm.F:            CALL dbcsr_multiply(transa=dbcsr_no_transpose, transb=dbcsr_transpose, alpha=alpha, &
+src/core/dbcsr_lib.F:   USE dbcsr_mm, ONLY: dbcsr_multiply_clear_mempools, &
+src/core/dbcsr_lib.F:                       dbcsr_multiply_lib_finalize, &
+src/core/dbcsr_lib.F:                       dbcsr_multiply_lib_init, &
+src/core/dbcsr_lib.F:                       dbcsr_multiply_print_statistics
+src/core/dbcsr_lib.F:      CALL dbcsr_multiply_lib_init()
+src/core/dbcsr_lib.F:      CALL dbcsr_multiply_lib_finalize()
+src/core/dbcsr_lib.F:      call dbcsr_multiply_print_statistics(default_group, ext_io_unit)
+src/core/dbcsr_lib.F:      CALL dbcsr_multiply_clear_mempools()
+src/dbcsr.h:    void c_dbcsr_multiply_${nametype}$ (char c_transa, char c_transb,
+tests/inputs/test_square_sparse_rma.perf:dbcsr_multiply
+tests/inputs/test_rect1_sparse.perf:dbcsr_multiply
+tests/inputs/test_rect2_sparse.perf:dbcsr_multiply
+tests/inputs/test_square_sparse.perf:dbcsr_multiply
+tests/inputs/test_square_sparse_bigblocks.perf:dbcsr_multiply
+tests/inputs/test_singleblock.perf:dbcsr_multiply
+tests/inputs/test_rect2_dense.perf:dbcsr_multiply
+tests/inputs/test_square_dense.perf:dbcsr_multiply
+tests/inputs/test_rect1_dense.perf:dbcsr_multiply
+tests/inputs/test_H2O.perf:dbcsr_multiply
+tests/input.perf:dbcsr_multiply
+tests/dbcsr_test_multiply.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+tests/dbcsr_test_multiply.F:         WRITE (io_unit, *) " -- TESTING dbcsr_multiply (", transa, ", ", transb, &
+tests/dbcsr_test_multiply.F:         CALL dbcsr_multiply(transa, transb, alpha, &
+tests/dbcsr_test_multiply.F:            WRITE (io_unit, *) " -- TESTING dbcsr_multiply (", transa, ", ", transb, &
+tests/dbcsr_test_multiply.F:            WRITE (io_unit, *) " -- TESTING dbcsr_multiply (", transa, ", ", transb, &
+tests/dbcsr_test_multiply.F:         !! dense result of the dbcsr_multiply
+tests/dbcsr_performance_multiply.F:   USE dbcsr_multiply_api, ONLY: dbcsr_multiply
+tests/dbcsr_performance_multiply.F:         WRITE (io_unit, *) "      dbcsr_multiply \\"
+tests/dbcsr_performance_multiply.F:         CALL dbcsr_multiply(transa, transb, alpha, &
+tests/dbcsr_performance_multiply.F:         WRITE (io_unit, *) " -- PERF dbcsr_multiply (", transa, ", ", transb, &
+tests/dbcsr_performance_driver.F:   CASE ('dbcsr_multiply')

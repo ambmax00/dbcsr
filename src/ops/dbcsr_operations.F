@@ -570,7 +570,7 @@ CONTAINS
                ENDDO
             CASE (dbcsr_type_real_8)
                DO i = 1, a_row_size
-                  DO irow = i, i + a_col_size*a_row_size - 1, a_row_size
+                  DO irow = i, i + a_col_size**2 - 1, a_col_size
                      data_any%d%r_dp(irow) = data_any%d%r_dp(irow)*alpha%d%r_dp(row_offset + i - 1)
                   END DO
                ENDDO
@@ -589,9 +589,6 @@ CONTAINS
             END SELECT
          ENDIF
       ENDDO
-
-      FLUSH (6)
-
       CALL dbcsr_iterator_stop(iter)
       CALL dbcsr_data_clear_pointer(data_any)
       CALL dbcsr_data_release(data_any)
